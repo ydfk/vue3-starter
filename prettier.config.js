@@ -4,7 +4,7 @@ module.exports = {
   useTabs: false,
   semi: true,
   vueIndentScriptAndStyle: true,
-  singleQuote: true,
+  singleQuote: false,
   quoteProps: "as-needed",
   bracketSpacing: true,
   trailingComma: "es5",

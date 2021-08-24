@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+yarn lint:prettier
+
+yarn lint:eslint
+
+yarn lint:stylelint
