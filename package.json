@@ -7,9 +7,11 @@
     "url": "https://github.com/ydfk/vue3-starter"
   },
   "scripts": {
+    "pre:dev": "node ./node_modules/esbuild/install.js",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
     "clean:lib": "rimraf node_modules",
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
@@ -22,7 +24,11 @@
     "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "mockjs": "^1.1.0",
+    "nprogress": "^0.2.0",
     "postcss": "^8.3.6",
+    "scss": "^0.2.4",
     "vue": "^3.0.5",
     "vue-router": "4",
     "vuex": "^4.0.2"
@@ -30,11 +36,12 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@types/node": "^16.7.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "@vitejs/plugin-vue": "^1.4.0",
     "@vitejs/plugin-vue-jsx": "^1.1.7",
-    "@vue/compiler-sfc": "^3.2.4",
+    "@vue/compiler-sfc": "^3.2.6",
     "autoprefixer": "^10.3.2",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.1.1",
@@ -48,10 +55,12 @@
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
+    "sass": "^1.38.1",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.1.0",
+    "ts-node": "^10.2.1",
     "typescript": "^4.3.5",
     "vite": "^2.5.0",
     "vue-eslint-parser": "^7.10.0",

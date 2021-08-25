@@ -1,27 +1,27 @@
+<!--
+ * @Description: Copyright (c) ydfk. All rights reserved
+ * @Author: ydfk
+ * @Date: 2021-08-24 17:24:45
+ * @LastEditors: ydfk
+ * @LastEditTime: 2021-08-25 18:26:25
+-->
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <span class="title">{{ title }}</span>
+  <RouterView />
 </template>
 
-<script lang="ts">
-  import { defineComponent } from "vue";
-  import HelloWorld from "./components/HelloWorld.vue";
-
-  export default defineComponent({
-    name: "App",
-    components: {
-      HelloWorld,
-    },
-  });
+<script lang="ts" setup>
+  const title = "vue3 starter";
 </script>
 
-<style>
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+<style lang="scss">
+  @import "./styles/var.scss";
+
+  body {
+    font-family: $fontFamily;
+  }
+
+  .title {
+    color: red;
   }
 </style>
