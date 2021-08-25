@@ -1,3 +1,10 @@
+/*
+ * @Description: Copyright (c) ydfk. All rights reserved
+ * @Author: ydfk
+ * @Date: 2021-08-25 10:19:43
+ * @LastEditors: ydfk
+ * @LastEditTime: 2021-08-25 10:43:11
+ */
 module.exports = {
   // type 类型（定义之后，可通过上下键选择）
   types: [
@@ -19,7 +26,7 @@ module.exports = {
     ["components", "组件相关"],
     ["hooks", "hook 相关"],
     ["utils", "utils 相关"],
-    ["element-ui", "对 element-ui 的调整"],
+    ["ui", "对 ui组件 的调整"],
     ["styles", "样式相关"],
     ["deps", "项目依赖"],
     ["auth", "对 auth 修改"],
