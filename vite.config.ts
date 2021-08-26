@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 13:36:56
+ * @LastEditTime: 2021-08-26 22:08:29
  */
 import { ConfigEnv, defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -22,6 +22,10 @@ export default ({ mode }: ConfigEnv) => {
         {
           find: /@\//,
           replacement: pathResolve("src") + "/",
+        },
+        {
+          find: /#\//,
+          replacement: pathResolve("types") + "/",
         },
       ],
     },

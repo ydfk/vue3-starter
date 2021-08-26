@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-25 10:19:43
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 18:52:30
+ * @LastEditTime: 2021-08-26 23:09:13
  */
 module.exports = {
   // type 类型（定义之后，可通过上下键选择）
@@ -27,6 +27,7 @@ module.exports = {
     ["ui", "对 ui组件 的调整"],
     ["styles", "样式相关"],
     ["deps", "项目依赖"],
+    ["utils", "项目工具类修改"],
     ["other", "其他修改"],
     // 如果选择 custom，后面会让你再输入一个自定义的 scope。也可以不设置此项，把后面的 allowCustomScopes 设置为 true
     ["custom", "以上都不是？我要自定义"],

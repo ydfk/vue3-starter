@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.0-rc.6",
@@ -34,7 +35,9 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@types/lodash-es": "^4.17.4",
     "@types/node": "^16.7.2",
+    "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "@vitejs/plugin-vue": "^1.6.0",
