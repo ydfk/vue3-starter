@@ -19,7 +19,7 @@
     "lint:stylelint": "stylelint --cache --fix \"src/**/*.{vue,less,postcss,css,scss,sass}\" --cache --cache-location node_modules/.cache/stylelint/",
     "lint": "lint-staged -c ./.husky/lintstagedrc.js",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "cz": "yarn log && git add . && git cz",
+    "cz": "git add . && git cz",
     "prepare": "husky install",
     "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install"
   },
@@ -67,7 +67,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-customizable"
+      "path": "node_modules/cz-customizable"
     }
   }
 }
