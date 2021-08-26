@@ -1,3 +1,10 @@
+/*
+ * @Description: Copyright (c) ydfk. All rights reserved
+ * @Author: ydfk
+ * @Date: 2021-08-24 17:24:45
+ * @LastEditors: ydfk
+ * @LastEditTime: 2021-08-26 13:36:56
+ */
 import { ConfigEnv, defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
@@ -12,15 +19,9 @@ export default ({ mode }: ConfigEnv) => {
     plugins: [vue()],
     resolve: {
       alias: [
-        // /@/xxxx => src/xxxx
         {
-          find: /\/@\//,
+          find: /@\//,
           replacement: pathResolve("src") + "/",
-        },
-        // /#/xxxx => types/xxxx
-        {
-          find: /\/#\//,
-          replacement: pathResolve("types") + "/",
         },
       ],
     },
@@ -37,6 +38,23 @@ export default ({ mode }: ConfigEnv) => {
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace("/api/", "/"),
+        },
+      },
+    },
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "./src/styles/var.scss";@import "./src/styles/global.scss";@import "./src/styles/mixins.scss";`,
+        },
+      },
+    },
+
+    build: {
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
         },
       },
     },

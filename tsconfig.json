@@ -15,8 +15,7 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "paths": {
-      "/@/*": ["src/*"],
-      "/#/*": ["types/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
