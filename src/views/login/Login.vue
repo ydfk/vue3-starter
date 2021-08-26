@@ -3,11 +3,12 @@
  * @Author: ydfk
  * @Date: 2021-08-26 09:16:24
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 13:59:18
+ * @LastEditTime: 2021-08-26 17:38:40
 -->
 <template>
   <div class="login">
     <div class="title">这是登录</div>
+    <router-link :to="{ name: 'dashboard' }"> 主页 </router-link>
   </div>
 </template>
 

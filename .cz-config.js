@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-25 10:19:43
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-25 10:43:11
+ * @LastEditTime: 2021-08-26 17:15:36
  */
 module.exports = {
   // type 类型（定义之后，可通过上下键选择）
@@ -19,6 +19,7 @@ module.exports = {
     { value: "ci", name: "ci:       修改 CI 配置、脚本" },
     { value: "chore", name: "chore:    对构建过程或辅助工具和库的更改（不影响源文件、测试用例）" },
     { value: "revert", name: "revert:   回滚 commit" },
+    { value: "release", name: "release:   发布" },
   ],
 
   // scope 类型（定义之后，可通过上下键选择）
@@ -29,7 +30,6 @@ module.exports = {
     ["ui", "对 ui组件 的调整"],
     ["styles", "样式相关"],
     ["deps", "项目依赖"],
-    ["auth", "对 auth 修改"],
     ["other", "其他修改"],
     // 如果选择 custom，后面会让你再输入一个自定义的 scope。也可以不设置此项，把后面的 allowCustomScopes 设置为 true
     ["custom", "以上都不是？我要自定义"],
