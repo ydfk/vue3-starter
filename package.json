@@ -1,6 +1,6 @@
 {
   "name": "vue3-starter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "ydfk",
     "email": "lyh6728326@gmail.com",
@@ -21,7 +21,8 @@
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cz": "git add . && git cz",
     "prepare": "husky install",
-    "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install"
+    "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && yarn install",
+    "release": "standard-version"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -59,6 +60,7 @@
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "scss": "^0.2.4",
+    "standard-version": "^9.3.1",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
