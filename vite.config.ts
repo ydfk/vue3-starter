@@ -3,12 +3,21 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-27 12:14:36
+ * @LastEditTime: 2021-09-16 21:00:52
  */
 import { ConfigEnv, defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import { viteMockServe } from "vite-plugin-mock";
+import WindiCSS from "vite-plugin-windicss";
+import pkg from "./package.json";
+import dayjs from "dayjs";
+
+const { dependencies, devDependencies, name, version } = pkg;
+const __APP_INFO__ = {
+  pkg: { dependencies, devDependencies, name, version },
+  lastBuildTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+};
 
 const pathResolve = (dir: string) => {
   return resolve(process.cwd(), ".", dir);
@@ -16,11 +25,23 @@ const pathResolve = (dir: string) => {
 
 export default ({ mode, command }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd());
+  const isBuild = command === "build";
 
-  const mockPlugin = env.VITE_USE_MOCK && viteMockServe({ ignore: /^\_/, mockPath: "mock", localEnabled: command === "serve" });
+  const mockPlugin =
+    env.VITE_USE_MOCK &&
+    viteMockServe({
+      ignore: /^\_/,
+      mockPath: "mock",
+      localEnabled: command === "serve",
+      prodEnabled: command !== "serve" && isBuild,
+      injectCode: `
+        import { setupProdMockServer } from '../mock/_createProductionServer';
+        setupProdMockServer();
+      `,
+    });
 
   return defineConfig({
-    plugins: [vue(), mockPlugin],
+    plugins: [vue({ refTransform: true }), WindiCSS(), mockPlugin],
     resolve: {
       alias: [
         {
@@ -45,7 +66,7 @@ export default ({ mode, command }: ConfigEnv) => {
           target: env.VITE_PROXY_HOST,
           changeOrigin: true,
           secure: false,
-          rewrite: (path) => path.replace("/api/", "/"),
+          rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
     },
@@ -53,7 +74,7 @@ export default ({ mode, command }: ConfigEnv) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "./src/styles/var.scss";@import "./src/styles/global.scss";@import "./src/styles/mixins.scss";`,
+          additionalData: `@import "./src/styles/var.scss";`,
         },
       },
     },
@@ -65,6 +86,10 @@ export default ({ mode, command }: ConfigEnv) => {
           drop_debugger: true,
         },
       },
+    },
+
+    define: {
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
   });
 };

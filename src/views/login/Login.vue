@@ -3,11 +3,11 @@
  * @Author: ydfk
  * @Date: 2021-08-26 09:16:24
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-27 12:37:43
+ * @LastEditTime: 2021-09-16 21:02:17
 -->
 <template>
   <div class="login">
-    <div class="title">这是登录</div>
+    <div class="flex justify-center">这是登录</div>
     <p>{{ user }}</p>
     <router-link :to="{ name: 'dashboard' }"> 主页 </router-link>
   </div>
@@ -31,9 +31,3 @@
     },
   });
 </script>
-
-<style lang="scss" scoped>
-  .title {
-    @include flex;
-  }
-</style>

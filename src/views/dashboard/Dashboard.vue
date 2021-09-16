@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 16:45:57
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 17:44:36
+ * @LastEditTime: 2021-09-16 21:04:35
 -->
 <template>
   <div class="dashboard">
@@ -32,8 +32,4 @@
   };
 </script>
 
-<style lang="scss" scoped>
-  .dashboard {
-    @include flex;
-  }
-</style>
+<style lang="scss" scoped></style>
