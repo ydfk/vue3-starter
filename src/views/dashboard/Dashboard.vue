@@ -8,6 +8,7 @@
 <template>
   <div class="dashboard">
     {{ msg }}
+
     <br />
     appState Loading 状态 {{ appStore.loading }}
     <br />
@@ -23,7 +24,7 @@
   const msg = "这是dashboard";
   const appStore = useAppStore();
 
-  const changeLoading = () => {
+  const changeloading = () => {
     if (appStore.loading) {
       appStore.setLoading(false);
     } else {

@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 09:16:24
  * @LastEditors: ydfk
- * @LastEditTime: 2021-09-16 21:02:17
+ * @LastEditTime: 2021-10-27 14:40:17
 -->
 <template>
   <div class="login">
@@ -15,7 +15,8 @@
 
 <script lang="ts">
   import { loginApi } from "@/apis/login";
-  import { defineComponent, onMounted, ref } from "vue-demi";
+
+  import { defineComponent, onMounted, ref } from "vue";
 
   export default defineComponent({
     setup() {
