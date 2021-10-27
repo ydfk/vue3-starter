@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 21:51:41
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 23:07:28
+ * @LastEditTime: 2021-10-27 17:57:59
  */
 
 import { Result, RequestOptions } from "#/axios";
@@ -110,7 +110,9 @@ const transform: AxiosTransform = {
     const token = "";
     if (token && (config as Record<string, any>)?.requestOptions?.withToken !== false) {
       // jwt token
-      config.headers.Authorization = options.authenticationScheme ? `${options.authenticationScheme} ${token}` : token;
+      if (config.headers) {
+        config.headers.Authorization = options.authenticationScheme ? `${options.authenticationScheme} ${token}` : token;
+      }
     }
     return config;
   },
@@ -146,6 +148,7 @@ const transform: AxiosTransform = {
         return Promise.reject(error);
       }
     } catch (error) {
+      //@ts-ignore
       throw new Error(error);
     }
 
