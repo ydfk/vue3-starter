@@ -63,6 +63,7 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
+    "sass": "^1.43.4",
     "scss": "^0.2.4",
     "standard-version": "^9.3.2",
     "stylelint": "^13.13.1",
