@@ -21,18 +21,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@master
-
+        with:
+          node-version: "16"
       - name: Prepare
         run: |
           echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
 
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: install
+      - name: Install
+        run: npm install
 
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
+      - name: Build
+        run: npm run build
 
       - name: Upload
         uses: actions/upload-artifact@v2.2.4
