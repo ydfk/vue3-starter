@@ -3,10 +3,10 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2021-10-27 16:44:41
+ * @LastEditTime: 2021-10-28 17:22:34
 -->
 <template>
-  <routerview />
+  <router-view />
 </template>
 
 <script lang="ts" setup></script>
