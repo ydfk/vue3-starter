@@ -26,11 +26,13 @@ jobs:
         run: |
           echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
 
-      - name: Install
-        run: npm install
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
 
-      - name: Build
-        run: npm run build
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
 
       - name: Upload
         uses: actions/upload-artifact@v2.2.4
