@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2021-09-16 21:03:44
+ * @LastEditTime: 2022-01-25 11:39:42
  */
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -15,12 +15,18 @@ import "dayjs/locale/zh-cn";
 import "virtual:windi.css";
 import "virtual:windi-devtools";
 
+import { message } from "ant-design-vue";
+import "ant-design-vue/es/message/style/css";
+
 dayjs.locale("zh-cn");
 
 const bootstrap = () => {
   const app = createApp(App);
   setupRouter(app);
   setupStore(app);
+
+  app.config.globalProperties.$message = message;
+
   app.mount("#app");
 };
 
