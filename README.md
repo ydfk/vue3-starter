@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-27 12:43:32
+ * @LastEditTime: 2022-01-25 12:31:29
 -->
 
 # Vue 3 + Typescript + Vite
@@ -15,6 +15,10 @@
 包括了 vue-router 和 pinia
 
 包括了 mock eslint stylelint 等工具的基本配置
+
+使用了 ui 组件 [Ant Design Vue](https://next.antdv.com/components/overview-cn/) 并且引入按需加载 无需再导入
+
+推荐使用包管理工具 [pnpm](https://pnpm.io/)
 
 # 更新日志
 
