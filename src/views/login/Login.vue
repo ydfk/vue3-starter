@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 09:16:24
  * @LastEditors: ydfk
- * @LastEditTime: 2022-01-25 11:42:49
+ * @LastEditTime: 2022-02-08 15:57:19
 -->
 <template>
   <div class="login">
@@ -15,8 +15,8 @@
 
 <script lang="ts">
   import { loginApi } from "@/apis/login";
-
-  import { defineComponent, onMounted, ref } from "vue";
+  import { message } from "ant-design-vue";
+  //import { defineComponent, onMounted, ref } from "vue";
   import { useRouter } from "vue-router";
 
   export default defineComponent({
@@ -31,6 +31,7 @@
       return {
         user: user,
         onMainPage: () => {
+          message.info("登录成功");
           router.push({ name: "dashboard" });
         },
       };

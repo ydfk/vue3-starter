@@ -3,17 +3,18 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2022-01-25 11:54:56
+ * @LastEditTime: 2022-02-08 16:07:58
  */
 import { ConfigEnv, defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { resolve } from "path";
+import path, { resolve } from "path";
 import { viteMockServe } from "vite-plugin-mock";
 import WindiCSS from "vite-plugin-windicss";
 import pkg from "./package.json";
 import dayjs from "dayjs";
 import Components from "unplugin-vue-components/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+import AutoImport from "unplugin-auto-import/vite";
 
 const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
@@ -43,7 +44,21 @@ export default ({ mode, command }: ConfigEnv) => {
     });
 
   return defineConfig({
-    plugins: [vue({ refTransform: true }), WindiCSS(), mockPlugin, Components({ resolvers: [AntDesignVueResolver()] })],
+    plugins: [
+      vue({ refTransform: false }),
+      WindiCSS(),
+      mockPlugin,
+      Components({
+        resolvers: [
+          AntDesignVueResolver({
+            importStyle: "less",
+          }),
+        ],
+      }),
+      AutoImport({
+        imports: ["vue"],
+      }),
+    ],
     resolve: {
       alias: [
         {
@@ -77,6 +92,12 @@ export default ({ mode, command }: ConfigEnv) => {
       preprocessorOptions: {
         scss: {
           additionalData: `@import "./src/styles/var.scss";`,
+        },
+        less: {
+          modifyVars: {
+            //"primary-color": "#fff",
+          },
+          javascriptEnabled: true,
         },
       },
     },
