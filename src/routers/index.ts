@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 12:30:11
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 16:43:32
+ * @LastEditTime: 2022-04-09 18:33:16
  */
 
 import { App } from "vue";
@@ -18,6 +18,10 @@ export const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
+  // 处理meta
+  if (to.meta && to.meta.title) {
+    document.title = String(to.meta.title);
+  }
   NProgress.start();
 });
 

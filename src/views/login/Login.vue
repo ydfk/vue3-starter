@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 09:16:24
  * @LastEditors: ydfk
- * @LastEditTime: 2022-02-08 15:57:19
+ * @LastEditTime: 2022-04-09 18:30:14
 -->
 <template>
   <div class="login">
@@ -13,28 +13,20 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
   import { loginApi } from "@/apis/login";
   import { message } from "ant-design-vue";
-  //import { defineComponent, onMounted, ref } from "vue";
   import { useRouter } from "vue-router";
 
-  export default defineComponent({
-    setup() {
-      const router = useRouter();
-      const user = ref({});
+  const router = useRouter();
+  const user = ref({});
 
-      onMounted(async () => {
-        user.value = await loginApi("u", "p");
-      });
-
-      return {
-        user: user,
-        onMainPage: () => {
-          message.info("登录成功");
-          router.push({ name: "dashboard" });
-        },
-      };
-    },
+  onMounted(async () => {
+    user.value = await loginApi("u", "p");
   });
+
+  const onMainPage = () => {
+    message.info("登录成功");
+    router.push({ name: "dashboard" });
+  };
 </script>
