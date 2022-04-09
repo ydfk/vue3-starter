@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2022-02-08 16:07:58
+ * @LastEditTime: 2022-04-09 18:11:47
  */
 import { ConfigEnv, defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import Components from "unplugin-vue-components/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 import AutoImport from "unplugin-auto-import/vite";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
@@ -45,7 +46,8 @@ export default ({ mode, command }: ConfigEnv) => {
 
   return defineConfig({
     plugins: [
-      vue({ refTransform: false }),
+      vue({ reactivityTransform: false }),
+      vueJsx(),
       WindiCSS(),
       mockPlugin,
       Components({
@@ -103,12 +105,13 @@ export default ({ mode, command }: ConfigEnv) => {
     },
 
     build: {
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-        },
-      },
+      // target: ["esnext"],
+      // terserOptions: {
+      //   compress: {
+      //     drop_console: true,
+      //     drop_debugger: true,
+      //   },
+      // },
     },
 
     define: {
