@@ -3,23 +3,22 @@
  * @Author: ydfk
  * @Date: 2021-08-24 18:23:01
  * @LastEditors: ydfk
- * @LastEditTime: 2021-10-27 17:28:06
+ * @LastEditTime: 2022-04-10 11:17:00
  */
 module.exports = {
   root: true,
-  plugins: ["stylelint-order"],
-  extends: ["stylelint-config-standard", "stylelint-config-prettier"],
+  extends: ["stylelint-config-standard-scss", "stylelint-config-recommended-vue/scss", "stylelint-config-recess-order", "stylelint-config-prettier"],
   rules: {
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        ignorePseudoClasses: ["global"],
+        ignorePseudoClasses: ["deep", "global"],
       },
     ],
     "selector-pseudo-element-no-unknown": [
       true,
       {
-        ignorePseudoElements: ["v-deep"],
+        ignorePseudoElements: ["v-deep", "v-global", "v-slotted"],
       },
     ],
     "at-rule-no-unknown": [
@@ -43,24 +42,7 @@ module.exports = {
       },
     ],
     "unit-no-unknown": [true, { ignoreUnits: ["rpx"] }],
-    "order/order": [
-      [
-        "dollar-variables",
-        "custom-properties",
-        "at-rules",
-        "declarations",
-        {
-          type: "at-rule",
-          name: "supports",
-        },
-        {
-          type: "at-rule",
-          name: "media",
-        },
-        "rules",
-      ],
-      { severity: "warning" },
-    ],
+    "scss/at-import-partial-extension": "always",
   },
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts"],
 };
