@@ -3,8 +3,10 @@
  * @Author: ydfk
  * @Date: 2021-08-26 22:20:02
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 22:35:58
+ * @LastEditTime: 2022-04-14 14:01:01
  */
+
+import { message } from "ant-design-vue";
 
 export function checkStatus(status: number, msg: string): void {
   let errMessage = "";
@@ -62,7 +64,7 @@ export function checkStatus(status: number, msg: string): void {
     // } else if (errorMessageMode === "message") {
     //   error({ content: errMessage, key: `global_error_message_status_${status}` });
     // }
-    // TODO: 引入第三方ui组件后可处理
-    alert(errMessage);
+    //alert(errMessage);
+    message.error(errMessage);
   }
 }

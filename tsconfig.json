@@ -14,6 +14,8 @@
     "typeRoots": ["./node_modules/@types/", "./types"],
     "noImplicitAny": false,
     "skipLibCheck": true,
+    "removeComments": true,
+    "useUnknownInCatchVariables": false,
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["types/*"]
@@ -27,7 +29,9 @@
     "types/**/*.d.ts",
     "types/**/*.ts",
     "components.d.ts",
-    "auto-imports.d.ts"
+    "auto-imports.d.ts",
+    "mock/**/*.ts",
+    "vite.config.ts"
   ],
   "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
 }

@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 22:04:48
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 22:09:26
+ * @LastEditTime: 2022-04-14 14:16:54
  */
 
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
@@ -36,7 +36,7 @@ export abstract class AxiosTransform {
   /**
    * @description: 请求之前的拦截器
    */
-  requestInterceptors?: (config: AxiosRequestConfig, options: CreateAxiosOptions) => AxiosRequestConfig;
+  requestInterceptors?: (config: AxiosRequestConfig, options: CreateAxiosOptions) => Promise<AxiosRequestConfig>;
 
   /**
    * @description: 请求之后的拦截器

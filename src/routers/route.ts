@@ -3,19 +3,13 @@
  * @Author: ydfk
  * @Date: 2021-08-26 12:41:57
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 16:51:20
+ * @LastEditTime: 2022-11-23 15:02:59
  */
 
-import { RouterEnum } from "@/enums/routerEnum";
+import { RouterEnum } from "@/enums/router";
 import { RouteRecordRaw } from "vue-router";
 
-export const menusRoutes: RouteRecordRaw[] = [
-  {
-    path: `/${RouterEnum.Dashboard}`,
-    name: RouterEnum.Dashboard,
-    component: () => import("@/views/dashboard/Dashboard.vue"),
-  },
-];
+export const menusRoutes: RouteRecordRaw[] = [];
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -26,6 +20,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: `/${RouterEnum.Login}`,
     name: RouterEnum.Login,
+    meta: { needAuth: false },
     component: () => import("@/views/login/Login.vue"),
   },
   {

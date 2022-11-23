@@ -2,15 +2,15 @@
  * @Description: Copyright (c) ydfk. All rights reserved
  * @Author: ydfk
  * @Date: 2021-08-26 21:53:20
- * @LastEditors: ydfk
- * @LastEditTime: 2021-10-27 18:04:02
+ * @LastEditors: tsm
+ * @LastEditTime: 2022-04-27 09:40:50
  */
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from "axios";
 import axios from "axios";
 import qs from "qs";
 import { cloneDeep, isFunction, omit } from "lodash-es";
 import { UploadFileParams, RequestOptions, Result } from "#/axios";
-import { ContentTypeEnum, RequestEnum } from "@/enums/httpEnum";
+import { ContentTypeEnum, RequestEnum } from "@/enums/http";
 import { AxiosCanceler } from "./axiosCancel";
 import { CreateAxiosOptions } from "./axiosTransform";
 
@@ -76,7 +76,7 @@ export class VAxios {
     const axiosCanceler = new AxiosCanceler();
 
     // Request interceptor configuration processing
-    this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+    this.axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
       const ignoreCancel =
         config.headers && config.headers.ignoreCancelToken !== undefined
@@ -85,7 +85,7 @@ export class VAxios {
 
       !ignoreCancel && axiosCanceler.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors)) {
-        config = requestInterceptors(config, this.options);
+        config = await requestInterceptors(config, this.options);
       }
       return config;
     }, undefined);
@@ -152,11 +152,9 @@ export class VAxios {
   supportFormData(config: AxiosRequestConfig) {
     const headers = config.headers || this.options.headers;
     const contentType = headers?.["Content-Type"] || headers?.["content-type"];
-
     if (contentType !== ContentTypeEnum.FORM_URLENCODED || !Reflect.has(config, "data") || config.method?.toUpperCase() === RequestEnum.GET) {
       return config;
     }
-
     return {
       ...config,
       data: qs.stringify(config.data, { arrayFormat: "brackets" }),
@@ -194,7 +192,6 @@ export class VAxios {
     conf.requestOptions = opt;
 
     conf = this.supportFormData(conf);
-
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)

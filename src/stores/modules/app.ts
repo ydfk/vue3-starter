@@ -3,9 +3,10 @@
  * @Author: ydfk
  * @Date: 2021-08-26 17:27:13
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 17:45:07
+ * @LastEditTime: 2022-11-23 14:59:05
  */
 import { defineStore } from "pinia";
+import { store } from "@/stores";
 
 interface AppState {
   loading: boolean;
@@ -16,14 +17,10 @@ export const useAppStore = defineStore({
   state: (): AppState => ({
     loading: false,
   }),
-  getters: {
-    getLoading(): boolean {
-      return this.loading;
-    },
-  },
-  actions: {
-    setLoading(loading: boolean): void {
-      this.loading = loading;
-    },
-  },
+  // persist: {
+  //   paths: [],
+  //   storage: window.sessionStorage,
+  // },
 });
+
+export const useAppStoreWithOut = () => useAppStore(store);

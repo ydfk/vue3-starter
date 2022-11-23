@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2022-04-09 18:11:47
+ * @LastEditTime: 2022-10-26 15:25:29
  */
 import { ConfigEnv, defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -46,11 +46,13 @@ export default ({ mode, command }: ConfigEnv) => {
 
   return defineConfig({
     plugins: [
-      vue({ reactivityTransform: false }),
+      vue({ reactivityTransform: true }),
       vueJsx(),
       WindiCSS(),
       mockPlugin,
       Components({
+        dirs: ["src/components", "src/componentsBusiness"],
+        deep: true,
         resolvers: [
           AntDesignVueResolver({
             importStyle: "less",
@@ -58,7 +60,7 @@ export default ({ mode, command }: ConfigEnv) => {
         ],
       }),
       AutoImport({
-        imports: ["vue"],
+        imports: ["vue", "vue-router", "@vueuse/core"],
       }),
     ],
     resolve: {
@@ -103,7 +105,9 @@ export default ({ mode, command }: ConfigEnv) => {
         },
       },
     },
-
+    esbuild: {
+      pure: env.VITE_DROP_CONSOLE ? ["console.log", "debugger"] : [],
+    },
     build: {
       // target: ["esnext"],
       // terserOptions: {
@@ -116,6 +120,10 @@ export default ({ mode, command }: ConfigEnv) => {
 
     define: {
       __APP_INFO__: JSON.stringify(__APP_INFO__),
+    },
+
+    optimizeDeps: {
+      include: ["ant-design-vue/es/locale/zh_CN", "@ant-design/icons-vue", "dayjs/esm/locale/zh-cn"],
     },
   });
 };

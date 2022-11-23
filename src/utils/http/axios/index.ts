@@ -3,11 +3,11 @@
  * @Author: ydfk
  * @Date: 2021-08-26 21:51:41
  * @LastEditors: ydfk
- * @LastEditTime: 2021-10-27 17:57:59
+ * @LastEditTime: 2022-06-27 10:19:58
  */
 
 import { Result, RequestOptions } from "#/axios";
-import { RequestEnum, ContentTypeEnum } from "@/enums/httpEnum";
+import { RequestEnum, ContentTypeEnum } from "@/enums/http";
 import { setObjToUrlParams, deepMerge } from "@/utils";
 import { isString } from "@/utils/is";
 import { AxiosResponse } from "axios";
@@ -15,6 +15,8 @@ import { AxiosTransform, CreateAxiosOptions } from "./axiosTransform";
 import { checkStatus } from "./checkStatus";
 import { formatRequestDate, joinTimestamp } from "./helper";
 import { VAxios } from "./vAxios";
+import { message as atdvMessage } from "ant-design-vue";
+import { useUserStoreWithOut } from "@/stores/modules/user";
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -50,9 +52,7 @@ const transform: AxiosTransform = {
       return result;
     }
 
-    // TODO: 引入第三方ui组件后可处理
-    alert(message);
-
+    atdvMessage.error(message);
     throw new Error(message || "请求出错, 请稍候重试");
   },
 
@@ -105,16 +105,25 @@ const transform: AxiosTransform = {
    * @description: 请求拦截器处理
    */
   requestInterceptors: (config, options) => {
-    // 请求之前处理config
-    // TODO: 获取token
-    const token = "";
-    if (token && (config as Record<string, any>)?.requestOptions?.withToken !== false) {
-      // jwt token
-      if (config.headers) {
-        config.headers.Authorization = options.authenticationScheme ? `${options.authenticationScheme} ${token}` : token;
+    return new Promise((resolve, reject) => {
+      // 请求之前处理config
+      if ((config as Record<string, any>)?.requestOptions?.withToken !== false) {
+        useUserStoreWithOut()
+          .checkToken()
+          .then((token) => {
+            if (token) {
+              // jwt token
+              if (config.headers) {
+                config.headers.Authorization = options.authenticationScheme ? `${options.authenticationScheme} ${token}` : token;
+              }
+              resolve(config);
+            } else {
+              reject("token 不存在");
+            }
+          });
       }
-    }
-    return config;
+      resolve(config);
+    });
   },
 
   /**
@@ -143,8 +152,7 @@ const transform: AxiosTransform = {
       }
 
       if (errMessage) {
-        // TODO: 引入第三方ui组件后可处理
-        alert(message);
+        atdvMessage.error(errMessage);
         return Promise.reject(error);
       }
     } catch (error) {
@@ -164,7 +172,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // authentication schemes，e.g: Bearer
         // authenticationScheme: 'Bearer',
         authenticationScheme: "Bearer",
-        timeout: 10 * 1000,
+        timeout: 10 * 60 * 1000,
         headers: { "Content-Type": ContentTypeEnum.JSON },
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },

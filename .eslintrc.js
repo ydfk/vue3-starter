@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 21:36:55
  * @LastEditors: ydfk
- * @LastEditTime: 2022-04-09 18:29:46
+ * @LastEditTime: 2022-04-20 10:59:47
  */
 // @ts-check
 const { defineConfig } = require("eslint-define-config");
@@ -55,12 +55,13 @@ module.exports = defineConfig({
     ],
     "space-before-function-paren": "off",
 
+    "vue/no-setup-props-destructure": "off",
     "vue/attributes-order": "off",
     "vue/one-component-per-file": "off",
     "vue/html-closing-bracket-newline": "off",
     "vue/max-attributes-per-line": "off",
     "vue/multiline-html-element-content-newline": "off",
-    "vue/multi-word-component-names": "warn",
+    "vue/multi-word-component-names": "off",
     "vue/singleline-html-element-content-newline": "off",
     "vue/attribute-hyphenation": "off",
     "vue/require-default-prop": "off",

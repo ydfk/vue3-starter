@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-09-16 20:47:49
  * @LastEditors: ydfk
- * @LastEditTime: 2021-09-16 20:47:50
+ * @LastEditTime: 2022-04-11 14:14:09
  */
 import { defineConfig } from "windicss/helpers";
 import colors from "windicss/colors";
