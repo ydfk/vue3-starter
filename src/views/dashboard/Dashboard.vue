@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 16:45:57
  * @LastEditors: ydfk
- * @LastEditTime: 2021-10-27 17:51:02
+ * @LastEditTime: 2024-02-22 16:07:57
 -->
 <template>
   <div class="dashboard">
@@ -26,9 +26,9 @@
 
   const changeLoading = () => {
     if (appStore.loading) {
-      appStore.setLoading(false);
+      appStore.loading = false;
     } else {
-      appStore.setLoading(true);
+      appStore.loading = true;
     }
   };
 </script>

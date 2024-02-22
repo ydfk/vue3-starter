@@ -9,7 +9,9 @@
   "scripts": {
     "dev:pre": "node ./node_modules/esbuild/install.js",
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "dev:debug": "vite --debug",
+    "build:only": "rimraf dist && vite build",
+    "build": "vue-tsc --noEmit --skipLibCheck && rimraf dist && vite build",
     "serve": "vite preview",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
@@ -21,6 +23,7 @@
     "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf pnpm-lock.yaml && rimraf node_modules && pnpm install",
     "analysis": "windicss-analysis",
     "cz": "git add . & czg",
+    "cz:pass": "git add . & czg --no-verify",
     "prepare": "husky"
   },
   "dependencies": {
@@ -50,7 +53,6 @@
     "@typescript-eslint/parser": "^7.0.2",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
-    "@vue-macros/volar": "^0.18.11",
     "@vue/compiler-sfc": "^3.4.19",
     "autoprefixer": "^10.4.17",
     "czg": "^1.8.0",
@@ -70,7 +72,6 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
-    "rollup": "4.12.0",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.71.1",
     "scss": "^0.2.4",
@@ -86,10 +87,9 @@
     "typescript": "^5.3.3",
     "unplugin-auto-import": "^0.17.5",
     "unplugin-vue-components": "^0.26.0",
-    "unplugin-vue-macros": "^2.7.10",
     "vite": "^5.1.4",
     "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-mock": "^3.0.1",
+    "vite-plugin-mock": "2.9.8",
     "vite-plugin-svg-icons2": "^1.0.0",
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^1.8.27"

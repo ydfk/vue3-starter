@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-22 14:41:06
+ * @LastEditTime: 2024-02-22 16:09:35
 -->
 <template>
   <a-config-provider
@@ -27,7 +27,6 @@
 </script>
 
 <style lang="scss">
-  @import url("./styles/var.scss");
   @import url("./styles/global.scss");
   @import url("./styles/antFix.scss");
 

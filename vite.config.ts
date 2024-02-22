@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-22 14:01:25
+ * @LastEditTime: 2024-02-22 16:20:43
  */
 import { ConfigEnv, PluginOption, defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -13,13 +13,12 @@ import dayjs from "dayjs";
 import Components from "unplugin-vue-components/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-//@ts-ignore
-import VueMacros from "unplugin-vue-macros/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import viteCompression from "vite-plugin-compression";
 import type { Drop } from "esbuild";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons2";
 import UnoCSS from "unocss/vite";
+import { configMockPlugin } from "./mock/configMockPlugin";
 
 const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
@@ -56,10 +55,7 @@ export default ({ mode, command }: ConfigEnv) => {
       imports: ["vue", "vue-router", "@vueuse/core"],
     }),
     viteCompression(),
-    // visualizer({
-    //   open: true,
-    // }),
-    splitVendorChunkPlugin(),
+    //splitVendorChunkPlugin(),
     // 注册所有的svg文件生成svg雪碧图
     createSvgIconsPlugin({
       iconDirs: [path.resolve(process.cwd(), "src/assets/images/svg")], // icon存放的目录
@@ -69,17 +65,24 @@ export default ({ mode, command }: ConfigEnv) => {
     }),
   ];
 
+  if (env.VITE_USE_MOCK && env.VITE_USE_MOCK === "true") {
+    plugins.push(configMockPlugin({ isBuild }));
+  }
+
+  if (env.VITE_ENABLE_ANALYZE && env.VITE_ENABLE_ANALYZE === "true") {
+    plugins.push(
+      visualizer({
+        filename: "./node_modules/.cache/visualizer/stats.html",
+        open: true,
+        gzipSize: true,
+        brotliSize: true,
+      })
+    );
+  }
+  const timestamp = new Date().getTime();
+
   return defineConfig({
-    plugins: [
-      VueMacros({
-        plugins: {
-          vue: vue(),
-          vueJsx: vueJsx(),
-        },
-      }),
-      UnoCSS(),
-      ...plugins,
-    ],
+    plugins: [vue(), vueJsx(), UnoCSS(), ...plugins],
     resolve: {
       alias: [
         {
@@ -128,7 +131,7 @@ export default ({ mode, command }: ConfigEnv) => {
       rollupOptions: {
         output: {
           // 入口文件名
-          //entryFileNames: `assets/entry/[name]-[hash]-${timestamp}.js`,
+          entryFileNames: `assets/entry/[name]-[hash]-${timestamp}.js`,
           manualChunks: {
             vue: ["vue", "pinia", "vue-router"],
             antd: ["ant-design-vue", "@ant-design/icons-vue"],

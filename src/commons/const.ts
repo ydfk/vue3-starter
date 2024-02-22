@@ -6,7 +6,6 @@
  * @LastEditTime: 2022-10-26 17:42:57
  */
 export const VERSION = "%BUILDNUMBER%";
-export const SVN_VERSION = "%REVISION%";
 export const TOKEN_REFRESH = 5 * 60;
 export const DATE_FORMAT = "YYYY-MM-DD";
 

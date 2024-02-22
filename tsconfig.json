@@ -25,7 +25,7 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "declaration": false,
-    "types": ["unplugin-vue-macros/macros-global", "vite/client", "vite-plugin-svg-icons2/client"],
+    "types": ["vite/client", "vite-plugin-svg-icons2/client"],
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["types/*"]

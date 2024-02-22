@@ -3,14 +3,14 @@
  * @Author: ydfk
  * @Date: 2021-08-26 09:16:24
  * @LastEditors: ydfk
- * @LastEditTime: 2022-11-23 15:03:25
+ * @LastEditTime: 2024-02-22 16:32:58
 -->
 <template>
   <div class="bg-neutral-50 h-screen login-card">
     <div class="sign-card bg-white w-[660px] h-[330px] rounded-[12px] p-5">
       <div class="logo text-2xl font-bold">
         <img class="logo-img" src="../../assets/images/logo.png" />
-        <span class="sysName">青矩Booking系统</span>
+        <span class="sysName">{{ SYSTEM_NAME }}</span>
       </div>
       <div>
         <a-form class="w-full" ref="formRef" :model="user">
@@ -27,11 +27,11 @@
             </a-input-password>
           </a-form-item>
         </a-form>
-        <div><a-button :loading="submitLoading" block type="primary">登录</a-button></div>
+        <div><a-button :loading="submitLoading" block type="primary" @click="onLogin">登录</a-button></div>
       </div>
     </div>
     <div class="copyRight flex-center">
-      <div> @{{ yearStr }} 青矩技术股份有限公司 版权所有 {{ VERSION }}({{ SVN_VERSION }})</div>
+      <div> @{{ yearStr }} 青矩技术股份有限公司 版权所有 {{ VERSION }}</div>
     </div>
   </div>
 </template>
@@ -39,27 +39,27 @@
 <script setup lang="ts">
   import { message } from "ant-design-vue";
   import type { FormInstance } from "ant-design-vue";
-  import { useUserStore } from "@/stores/modules/user";
   import { useAppStore } from "@/stores/modules/app";
-  import { RouterEnum } from "@/enums/router";
-  import { VERSION, SVN_VERSION } from "@/commons/const";
+  import { VERSION } from "@/commons/const";
 
-  const router = useRouter();
-  const userState = useUserStore();
-
-  let submitLoading = $ref(false);
-  let yearStr = 2022;
-  const user = ref({
-    userName: "",
-    password: "",
+  const submitLoading = ref(false);
+  const user = reactive({
+    userName: "admin",
+    password: "1",
   });
+  const SYSTEM_NAME = import.meta.env.VITE_GLOB_APP_TITLE || "vue-starter";
 
-  let formRef = $ref<FormInstance>();
+  const formRef = ref<FormInstance>();
 
-  onMounted(async () => {
-    const nowDate = new Date();
-    yearStr = nowDate.getFullYear();
-  });
+  const yearStr = computed(() => new Date().getFullYear());
+
+  const onLogin = async () => {
+    const values = await formRef.value?.validateFields();
+    if (values) {
+      useAppStore().loading = true;
+      submitLoading.value = true;
+    }
+  };
 
   const onMainPage = () => {
     message.success("登录成功");

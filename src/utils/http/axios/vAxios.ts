@@ -2,8 +2,8 @@
  * @Description: Copyright (c) ydfk. All rights reserved
  * @Author: ydfk
  * @Date: 2021-08-26 21:53:20
- * @LastEditors: tsm
- * @LastEditTime: 2022-04-27 09:40:50
+ * @LastEditors: ydfk
+ * @LastEditTime: 2024-02-22 15:44:57
  */
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from "axios";
 import axios from "axios";
@@ -76,6 +76,7 @@ export class VAxios {
     const axiosCanceler = new AxiosCanceler();
 
     // Request interceptor configuration processing
+    // @ts-ignore
     this.axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
       const ignoreCancel =
@@ -195,10 +196,10 @@ export class VAxios {
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
-        .then((res: AxiosResponse<Result>) => {
+        .then(async (res: AxiosResponse<Result>) => {
           if (transformRequestHook && isFunction(transformRequestHook)) {
             try {
-              const ret = transformRequestHook(res, opt);
+              const ret = await transformRequestHook(res, opt);
               resolve(ret);
             } catch (err) {
               reject(err || new Error("request error!"));
