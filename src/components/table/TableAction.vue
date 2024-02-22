@@ -29,8 +29,9 @@
         更多
         <down-outlined />
       </a>
-    </a-dropdown> </div
-></template>
+    </a-dropdown>
+  </div>
+</template>
 <script setup lang="ts">
   import type { TableActionKeyEnum } from "./enum";
   import type { TableAction } from "./model";
@@ -59,6 +60,6 @@
 </script>
 <style scoped lang="scss">
   :deep(.ant-divider-vertical) {
-    margin: 0px !important;
+    margin: 0 !important;
   }
 </style>

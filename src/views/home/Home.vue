@@ -30,15 +30,15 @@
 <style lang="scss" scoped>
   %content-box-com {
     padding: 15px;
-    background-color: #fff;
     border-radius: 16px;
+    background-color: #fff;
     box-shadow: 0 0 24px 0 rgb(39 40 72 / 6%);
   }
 
   .content {
     min-height: calc(100vh - $header-height);
-    padding: 13px 32px 32px;
     margin-top: $header-height;
+    padding: 13px 32px 32px;
 
     .content-box {
       @extend %content-box-com;

@@ -85,14 +85,14 @@
 
   :deep(.header-menu) {
     height: $header-height;
-    font-size: 14px;
-    color: #ddd;
     background-color: $header-color;
+    color: #ddd;
+    font-size: 14px;
 
     .ant-menu-item-selected {
-      color: #fff;
-      background-color: $header-color;
       border-bottom: 3px solid #fff;
+      background-color: $header-color;
+      color: #fff;
     }
 
     .ant-menu-item:hover {

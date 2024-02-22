@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-04-14 11:10:40
  * @LastEditors: ydfk
- * @LastEditTime: 2022-11-23 15:00:04
+ * @LastEditTime: 2024-02-22 14:57:45
  */
 import { apiGetCurrentUser } from "@/apis/user";
 import { TOKEN_REFRESH } from "@/commons/const";
@@ -35,7 +35,7 @@ export const useUserStore = defineStore({
       this.tokenExpire = "";
     },
     checkToken() {
-      return new Promise<string>(async (resolve, reject) => {
+      return new Promise<string>((resolve, reject) => {
         if (!this.token) {
           reject();
         } else {

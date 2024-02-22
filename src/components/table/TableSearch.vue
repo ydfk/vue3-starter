@@ -75,14 +75,14 @@
   .table-header {
     .table-header-left {
       display: flex;
-      justify-content: left;
       align-items: center;
+      justify-content: left;
     }
 
     .table-header-right {
       display: flex;
-      justify-content: right;
       align-items: center;
+      justify-content: right;
     }
   }
 </style>

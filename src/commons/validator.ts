@@ -3,13 +3,13 @@
  * @Author: ydfk
  * @Date: 2022-10-26 20:58:12
  * @LastEditors: ydfk
- * @LastEditTime: 2022-10-27 20:27:59
+ * @LastEditTime: 2024-02-22 14:57:08
  */
 import { doHttp } from "@/utils/http/axios";
 import { REGEX_CHINESE, REGEX_NO_SPACE } from "./const";
 
 function remote(rule, value) {
-  return new Promise<void>(async (resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const url: string = rule.url;
     if (url === undefined || url === null || url.trim() === "") {
       return reject("remote validator url is null");
@@ -30,16 +30,29 @@ function remote(rule, value) {
       rule.data[rule.field] = value;
     }
 
-    try {
-      const res = await doHttp.post<boolean>({ url: url, data: rule.data });
-      if (res) {
-        resolve();
-      } else {
-        reject(message);
-      }
-    } catch (e) {
-      reject(e);
-    }
+    // try {
+    //   const res = await doHttp.post<boolean>({ url: url, data: rule.data });
+    //   if (res) {
+    //     resolve();
+    //   } else {
+    //     reject(message);
+    //   }
+    // } catch (e) {
+    //   reject(e);
+    // }
+
+    doHttp
+      .post<boolean>({ url: url, data: rule.data })
+      .then((res) => {
+        if (res) {
+          resolve();
+        } else {
+          reject(message);
+        }
+      })
+      .catch((e) => {
+        reject(e);
+      });
   });
 }
 

@@ -14,9 +14,9 @@
   .system-name {
     width: 93px;
     height: 18px;
+    color: #fff;
     font-size: 16px;
     font-weight: 500;
     line-height: 36px;
-    color: #fff;
   }
 </style>

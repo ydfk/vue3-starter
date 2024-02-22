@@ -3,19 +3,23 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2022-10-26 15:25:29
+ * @LastEditTime: 2024-02-22 14:01:25
  */
-import { ConfigEnv, defineConfig, loadEnv } from "vite";
+import { ConfigEnv, PluginOption, defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path, { resolve } from "path";
-import { viteMockServe } from "vite-plugin-mock";
-import WindiCSS from "vite-plugin-windicss";
 import pkg from "./package.json";
 import dayjs from "dayjs";
 import Components from "unplugin-vue-components/vite";
-import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 import AutoImport from "unplugin-auto-import/vite";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+//@ts-ignore
+import VueMacros from "unplugin-vue-macros/vite";
+import { visualizer } from "rollup-plugin-visualizer";
+import viteCompression from "vite-plugin-compression";
+import type { Drop } from "esbuild";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons2";
+import UnoCSS from "unocss/vite";
 
 const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
@@ -27,41 +31,54 @@ const pathResolve = (dir: string) => {
   return resolve(process.cwd(), ".", dir);
 };
 
+const esBuildDrop = (env: Record<string, string>): Drop[] => {
+  if (env.VITE_DROP_DEBUGGER && env.VITE_DROP_DEBUGGER == "true" && env.VITE_DROP_CONSOLE && env.VITE_DROP_CONSOLE == "true") {
+    return ["console", "debugger"];
+  } else if (env.VITE_DROP_DEBUGGER && env.VITE_DROP_DEBUGGER == "true") {
+    return ["debugger"];
+  } else if (env.VITE_DROP_CONSOLE && env.VITE_DROP_CONSOLE == "true") {
+    return ["console"];
+  }
+
+  return [];
+};
+
 export default ({ mode, command }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd());
   const isBuild = command === "build";
 
-  const mockPlugin =
-    env.VITE_USE_MOCK &&
-    viteMockServe({
-      ignore: /^\_/,
-      mockPath: "mock",
-      localEnabled: command === "serve",
-      prodEnabled: command !== "serve" && isBuild,
-      injectCode: `
-        import { setupProdMockServer } from '../mock/_createProductionServer';
-        setupProdMockServer();
-      `,
-    });
+  const plugins: PluginOption[] = [
+    Components({
+      dirs: ["src/components", "src/componentsBusiness"],
+      deep: true,
+    }),
+    AutoImport({
+      imports: ["vue", "vue-router", "@vueuse/core"],
+    }),
+    viteCompression(),
+    // visualizer({
+    //   open: true,
+    // }),
+    splitVendorChunkPlugin(),
+    // 注册所有的svg文件生成svg雪碧图
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(process.cwd(), "src/assets/images/svg")], // icon存放的目录
+      symbolId: "icon-[name]", // symbol的id
+      inject: "body-last", // 插入的位置
+      customDomId: "__svg__icons__dom__", // svg的id
+    }),
+  ];
 
   return defineConfig({
     plugins: [
-      vue({ reactivityTransform: true }),
-      vueJsx(),
-      WindiCSS(),
-      mockPlugin,
-      Components({
-        dirs: ["src/components", "src/componentsBusiness"],
-        deep: true,
-        resolvers: [
-          AntDesignVueResolver({
-            importStyle: "less",
-          }),
-        ],
+      VueMacros({
+        plugins: {
+          vue: vue(),
+          vueJsx: vueJsx(),
+        },
       }),
-      AutoImport({
-        imports: ["vue", "vue-router", "@vueuse/core"],
-      }),
+      UnoCSS(),
+      ...plugins,
     ],
     resolve: {
       alias: [
@@ -91,31 +108,33 @@ export default ({ mode, command }: ConfigEnv) => {
         },
       },
     },
-
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: `@import "./src/styles/var.scss";`,
         },
         less: {
-          modifyVars: {
-            //"primary-color": "#fff",
-          },
           javascriptEnabled: true,
         },
       },
     },
     esbuild: {
-      pure: env.VITE_DROP_CONSOLE ? ["console.log", "debugger"] : [],
+      //pure: env.VITE_DROP_CONSOLE && env.VITE_DROP_CONSOLE == "true" ? ["console.log", "debugger"] : [],
+      drop: esBuildDrop(env),
     },
     build: {
-      // target: ["esnext"],
-      // terserOptions: {
-      //   compress: {
-      //     drop_console: true,
-      //     drop_debugger: true,
-      //   },
-      // },
+      target: "es2015",
+      cssTarget: "chrome80",
+      rollupOptions: {
+        output: {
+          // 入口文件名
+          //entryFileNames: `assets/entry/[name]-[hash]-${timestamp}.js`,
+          manualChunks: {
+            vue: ["vue", "pinia", "vue-router"],
+            antd: ["ant-design-vue", "@ant-design/icons-vue"],
+          },
+        },
+      },
     },
 
     define: {

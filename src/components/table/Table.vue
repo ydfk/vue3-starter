@@ -20,7 +20,7 @@
         :loading="loading"
         :pagination="pagination"
         :row-key="(record) => record.id"
-        @resizeColumn="handleResizeColumn"
+        @resize-column="handleResizeColumn"
         @change="handleTableChange">
         <template #bodyCell="{ text, record, index, column }">
           <template v-if="column.dataIndex === 'index'">{{ index + 1 + (pageIndex - 1) * pageSize }}</template>

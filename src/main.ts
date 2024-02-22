@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2022-07-07 16:20:37
+ * @LastEditTime: 2024-02-22 11:55:34
  */
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -18,14 +18,10 @@ import ObjectSupport from "dayjs/plugin/objectSupport";
 import Duration from "dayjs/plugin/duration";
 import "dayjs/locale/zh-cn";
 
-import "virtual:windi.css";
-import "virtual:windi-devtools";
-
-import "ant-design-vue/es/message/style/css";
+import "virtual:uno.css";
 import { AntDesignIcon } from "@/plugins/icon";
-
-import "v-calendar/dist/style.css";
-import VCalendar from "v-calendar";
+import Antd from "ant-design-vue";
+import "ant-design-vue/dist/reset.css";
 
 import { use } from "echarts/core";
 import ECharts from "vue-echarts";
@@ -50,9 +46,7 @@ const bootstrap = () => {
   setupStore(app);
 
   app.use(AntDesignIcon);
-  app.use(VCalendar, {
-    locale: "zh-cn",
-  });
+  app.use(Antd);
 
   app.component("VChart", ECharts);
 
