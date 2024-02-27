@@ -3,17 +3,17 @@
  * @Author: ydfk
  * @Date: 2022-04-13 13:45:37
  * @LastEditors: ydfk
- * @LastEditTime: 2022-11-23 15:00:24
+ * @LastEditTime: 2024-02-27 14:25:18
 -->
 <template>
   <a-layout>
     <a-layout-header class="header">
       <a-row :gutter="8" justify="space-between">
-        <a-col :xl="4" :xxl="3">
+        <a-col :span="3">
           <Logo />
         </a-col>
-        <!-- <a-col :xl="14" :xxl="15"> </a-col> -->
-        <a-col :xl="6" :xxl="6">
+        <a-col :span="18"> 菜单 </a-col>
+        <a-col :span="3">
           <a-dropdown :trigger="['click']" :placement="'bottomRight'" :overlayStyle="overlayStyle" class="cursor-pointer">
             <span class="ant-dropdown-link flex-right cursor-pointer">
               <user-outlined style="color: white" />
@@ -45,8 +45,8 @@
   import { openConfirmModal } from "@/components/modal/modalCommon";
 
   const overlayStyle = ref({
-    width: "100px",
-    minWidth: "100px",
+    width: "120px",
+    minWidth: "120px",
   });
 
   const userState = useUserStore();
@@ -58,6 +58,7 @@
   const onUserNameMenuClick = () => {
     openConfirmModal("退出", "确定退出登录吗？", () => {
       userState.clearUser();
+      router.replace(RouterEnum.Login);
     });
   };
 

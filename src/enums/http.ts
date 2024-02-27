@@ -3,8 +3,18 @@
  * @Author: ydfk
  * @Date: 2021-08-26 22:12:40
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 22:44:02
+ * @LastEditTime: 2024-02-26 15:56:43
  */
+
+/**
+ * @description: Request result set
+ */
+export enum ResultEnum {
+  SUCCESS = 0,
+  ERROR = -1,
+  TIMEOUT = 401,
+  TYPE = "success",
+}
 
 /**
  * @description: request method

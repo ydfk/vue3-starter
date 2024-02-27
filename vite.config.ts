@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-22 16:20:43
+ * @LastEditTime: 2024-02-27 11:44:11
  */
 import { ConfigEnv, PluginOption, defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -66,7 +66,7 @@ export default ({ mode, command }: ConfigEnv) => {
   ];
 
   if (env.VITE_USE_MOCK && env.VITE_USE_MOCK === "true") {
-    plugins.push(configMockPlugin({ isBuild }));
+    plugins.push(configMockPlugin(true));
   }
 
   if (env.VITE_ENABLE_ANALYZE && env.VITE_ENABLE_ANALYZE === "true") {
@@ -122,19 +122,18 @@ export default ({ mode, command }: ConfigEnv) => {
       },
     },
     esbuild: {
-      //pure: env.VITE_DROP_CONSOLE && env.VITE_DROP_CONSOLE == "true" ? ["console.log", "debugger"] : [],
       drop: esBuildDrop(env),
     },
     build: {
-      target: "es2015",
-      cssTarget: "chrome80",
+      // target: "ESNext",
+      // cssTarget: "chrome80",
       rollupOptions: {
         output: {
           // 入口文件名
           entryFileNames: `assets/entry/[name]-[hash]-${timestamp}.js`,
           manualChunks: {
-            vue: ["vue", "pinia", "vue-router"],
-            antd: ["ant-design-vue", "@ant-design/icons-vue"],
+            vue: ["vue", "pinia", "vue-router", "@vueuse/core"],
+            antd: ["ant-design-vue", "@ant-design/icons-vue", "dayjs"],
           },
         },
       },

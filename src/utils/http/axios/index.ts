@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 21:51:41
  * @LastEditors: ydfk
- * @LastEditTime: 2022-06-27 10:19:58
+ * @LastEditTime: 2024-02-27 13:56:21
  */
 
 import { Result, RequestOptions } from "#/axios";
@@ -17,6 +17,8 @@ import { formatRequestDate, joinTimestamp } from "./helper";
 import { VAxios } from "./vAxios";
 import { message as atdvMessage } from "ant-design-vue";
 import { useUserStoreWithOut } from "@/stores/modules/user";
+import { useAppStoreWithOut } from "@/stores/modules/app";
+import { goToLogin, router } from "@/routers";
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -43,17 +45,20 @@ const transform: AxiosTransform = {
       // return '[HTTP] Request has no return value';
       throw new Error("请求出错，请稍后重试");
     }
-    //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { type, result, message } = data;
-
+    const { flag, data: resultData, code, msg } = data;
     // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && Reflect.has(data, "type") && type === "success";
-    if (hasSuccess) {
-      return result;
+    if (flag) {
+      return resultData;
+    } else {
+      useAppStoreWithOut().loading = false;
+      if (code == "10401") {
+        useUserStoreWithOut().clearUser();
+        goToLogin();
+      } else {
+        atdvMessage.error(msg);
+        throw new Error(msg || "请求出错, 请稍候重试");
+      }
     }
-
-    atdvMessage.error(message);
-    throw new Error(message || "请求出错, 请稍候重试");
   },
 
   // 请求之前处理config

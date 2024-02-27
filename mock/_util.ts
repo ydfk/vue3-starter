@@ -3,8 +3,45 @@
  * @Author: ydfk
  * @Date: 2021-08-27 12:15:21
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-27 12:20:27
+ * @LastEditTime: 2024-02-27 14:01:41
  */
+
+import { ResultEnum } from "@/enums/http";
+
+export function resultSuccess<T = Recordable>(data: T, { msg = "ok" } = {}) {
+  return {
+    code: 10000,
+    data,
+    msg,
+    flag: true,
+  };
+}
+
+export function resultPageSuccess<T = any>(page: number, pageSize: number, list: T[], { msg = "ok" } = {}) {
+  const pageData = pagination(page, pageSize, list);
+
+  return {
+    ...resultSuccess({
+      items: pageData,
+      total: list.length,
+    }),
+    msg,
+  };
+}
+
+export function resultError(msg = "Request failed", { code = ResultEnum.ERROR, data = null } = {}) {
+  return {
+    code,
+    data,
+    msg,
+    flag: false,
+  };
+}
+
+export function pagination<T = any>(pageNo: number, pageSize: number, array: T[]): T[] {
+  const offset = (pageNo - 1) * Number(pageSize);
+  return offset + Number(pageSize) >= array.length ? array.slice(offset, array.length) : array.slice(offset, offset + Number(pageSize));
+}
 
 export interface requestParams {
   method: string;
@@ -13,36 +50,10 @@ export interface requestParams {
   query: any;
 }
 
-export function resultSuccess<T = Record<string, any>>(result: T, { message = "ok" } = {}) {
-  return {
-    result,
-    message,
-    type: "success",
-  };
-}
-
-export function resultError(message = "Request failed", { result = null } = {}) {
-  return {
-    result,
-    message,
-    type: "error",
-  };
-}
-
-export function resultPageSuccess<T = any>(page: number, pageSize: number, list: T[], { message = "ok" } = {}) {
-  const pageData = pagination(page, pageSize, list);
-
-  return {
-    ...resultSuccess({
-      items: pageData,
-      total: list.length,
-    }),
-    message,
-  };
-}
-
-export function pagination<T = any>(pageIndex: number, pageSize: number, array: T[]): T[] {
-  const offset = (pageIndex - 1) * Number(pageSize);
-  const ret = offset + Number(pageSize) >= array.length ? array.slice(offset, array.length) : array.slice(offset, offset + Number(pageSize));
-  return ret;
+/**
+ * @description 本函数用于从request数据中获取token，请根据项目的实际情况修改
+ *
+ */
+export function getRequestToken({ headers }: requestParams): string | undefined {
+  return headers?.authorization;
 }

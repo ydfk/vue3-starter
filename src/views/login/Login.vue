@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 09:16:24
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-22 16:32:58
+ * @LastEditTime: 2024-02-27 14:09:04
 -->
 <template>
   <div class="bg-neutral-50 h-screen login-card">
@@ -40,29 +40,40 @@
   import { message } from "ant-design-vue";
   import type { FormInstance } from "ant-design-vue";
   import { useAppStore } from "@/stores/modules/app";
-  import { VERSION } from "@/commons/const";
+  import { useUserStore } from "@/stores/modules/user";
+  import { VERSION, SYSTEM_NAME } from "@/commons/const";
+  import { router } from "@/routers";
+  import { RouterEnum } from "@/enums/router";
 
   const submitLoading = ref(false);
   const user = reactive({
     userName: "admin",
     password: "1",
   });
-  const SYSTEM_NAME = import.meta.env.VITE_GLOB_APP_TITLE || "vue-starter";
-
   const formRef = ref<FormInstance>();
-
   const yearStr = computed(() => new Date().getFullYear());
+
+  const { login } = useUserStore();
 
   const onLogin = async () => {
     const values = await formRef.value?.validateFields();
     if (values) {
       useAppStore().loading = true;
       submitLoading.value = true;
+      const res = await login(user.userName, user.password);
+      useAppStore().loading = false;
+      submitLoading.value = false;
+      if (res) {
+        onMainPage();
+      } else {
+        message.error("登录失败");
+      }
     }
   };
 
   const onMainPage = () => {
     message.success("登录成功");
+    router.push(RouterEnum.Dashboard);
   };
 </script>
 <style scoped lang="scss">

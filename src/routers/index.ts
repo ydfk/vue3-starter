@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 12:30:11
  * @LastEditors: ydfk
- * @LastEditTime: 2022-11-23 15:04:39
+ * @LastEditTime: 2024-02-27 14:03:24
  */
 
 import { App } from "vue";
@@ -13,13 +13,15 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { useUserStoreWithOut } from "@/stores/modules/user";
 import { RouterEnum } from "@/enums/router";
-import dayjs from "dayjs";
-import { useAppStoreWithOut } from "@/stores/modules/app";
 
 export const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
+
+export const goToLogin = () => {
+  router.replace({ name: RouterEnum.Login });
+};
 
 router.beforeEach((to, _, next) => {
   // 处理meta

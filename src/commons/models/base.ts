@@ -3,14 +3,15 @@
  * @Author: ydfk
  * @Date: 2022-04-14 11:23:13
  * @LastEditors: ydfk
- * @LastEditTime: 2022-11-23 14:53:33
+ * @LastEditTime: 2024-02-27 09:20:30
  */
-import type { Dayjs } from "dayjs";
 
 export interface BaseModel {
   id: string;
   updateAt?: Date | any;
   createAt?: Date | any;
+  updateBy?: string;
+  createBy?: string;
   [key: string]: any;
 }
 

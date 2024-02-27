@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 22:08:56
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-26 22:54:39
+ * @LastEditTime: 2024-02-27 13:57:10
  */
 
 export interface RequestOptions {
@@ -28,9 +28,11 @@ export interface RequestOptions {
 }
 
 export interface Result<T = any> {
-  type: "success" | "error" | "warning";
-  message: string;
-  result: T;
+  flag: boolean;
+  code: string;
+  msg: string;
+  time: string;
+  data: T;
 }
 
 // multipart/form-data: upload file

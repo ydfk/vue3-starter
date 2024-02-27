@@ -3,25 +3,36 @@
  * @Author: ydfk
  * @Date: 2021-08-27 12:01:39
  * @LastEditors: ydfk
- * @LastEditTime: 2021-08-27 12:26:11
+ * @LastEditTime: 2024-02-27 14:07:55
  */
 import { MockMethod } from "vite-plugin-mock";
-import { resultSuccess } from "./_util";
+import { resultSuccess, resultError } from "./_util";
 
 export default [
   {
     url: "/api/login",
-    timeout: 1000,
+    timeout: 100,
+    method: "post",
+    response: ({ body }) => {
+      const { userName, password } = body || {};
+      if (userName === "admin" && password === "1") {
+        return resultSuccess({
+          token: "@guid",
+          tokenExpiration: 18000,
+        });
+      } else {
+        return resultError("Incorrect account or password");
+      }
+    },
+  },
+  {
+    url: "/api/user/current",
+    timeout: 100,
     method: "get",
     response: () => {
       return resultSuccess({
         id: "@guid",
-        account: "@cfirst",
-        email: "@email",
-        nickname: "@cname()",
-        role: "@first",
-        createTime: "@datetime",
-        remark: "@cword(10,20)",
+        name: "@cname",
       });
     },
   },
