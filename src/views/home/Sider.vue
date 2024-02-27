@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-10-21 10:00:51
  * @LastEditors: ydfk
- * @LastEditTime: 2022-10-21 15:55:00
+ * @LastEditTime: 2024-02-27 14:31:31
 -->
 <template>
   <a-layout-sider width="150" theme="light">
@@ -24,7 +24,7 @@
   const route = useRoute();
   const router = useRouter();
 
-  let menus = $computed(() => {
+  let menus = computed(() => {
     const secondPath = route.path.split("/")[2];
 
     const secondRoute = router.getRoutes().find((f) => f.name == secondPath);
@@ -35,7 +35,7 @@
     return null;
   });
 
-  let menuKeys = $ref<string[]>([route.name as string]);
+  let menuKeys = ref<string[]>([route.name as string]);
 
   const onMenuClick: MenuProps["onClick"] = (menuInfo) => {
     router.push({ name: menuInfo.key as string });
