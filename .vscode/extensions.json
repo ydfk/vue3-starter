@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "ant-design-vue.vscode-ant-design-vue-helper",
+    "antfu.unocss",
+    "ChakrounAnas.turbo-console-log",
+    "dbaeumer.vscode-eslint",
+    "emmanuelbeziat.vscode-great-icons",
+    "esbenp.prettier-vscode",
+    "vue.volar",
+    "vue.vscode-typescript-vue-plugin",
+    "MS-CEINTL.vscode-language-pack-zh-hans",
+    "streetsidesoftware.code-spell-checker",
+    "stylelint.vscode-stylelint",
+    "syler.sass-indented",
+    "visualstudioexptteam.vscodeintellicode",
+    "mhutchie.git-graph"
+  ]
+}

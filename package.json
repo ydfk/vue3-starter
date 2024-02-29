@@ -19,7 +19,7 @@
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix --max-warnings=500",
     "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,sass,vue,html,md}\"",
     "lint:stylelint": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
-    "lint": "pnpm lint:prettier && pnpm lint:stylelint && pnpm lint:eslint",
+    "lint": "pnpm lint:prettier && pnpm lint:stylelint && pnpm lint:eslint && pnpm type:check",
     "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf pnpm-lock.yaml && rimraf node_modules && pnpm install",
     "analysis": "windicss-analysis",
     "cz": "git add . & czg",
@@ -112,6 +112,9 @@
       "eslint --fix",
       "stylelint --fix"
     ],
+    "*.{ts,vue}": [
+      "vue-tsc --noEmit"
+    ],
     "*.{scss,less,styl,html}": [
       "prettier --write",
       "stylelint --fix"
@@ -125,6 +128,7 @@
     "pnpm": ">=8.10.0"
   },
   "volta": {
-    "node": "18.19.1"
+    "node": "18.19.1",
+    "pnpm": "8.15.4"
   }
 }
