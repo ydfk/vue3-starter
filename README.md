@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-29 17:48:20
+ * @LastEditTime: 2024-03-04 09:36:58
 -->
 
 # 介绍
@@ -30,7 +30,7 @@ css使用[unoCss](https://unocss.nodejs.cn/)
 
 推荐安装`.vscode`文件夹中的`extensions`的扩展(注意打开vscode时候的提示可以一件安装)
 
-重点扩展`unocss` `volar` `prettier` `eslint` `stylelint`
+重点扩展`unocss` `volar(vue office)` `prettier` `eslint` `stylelint`
 
 # 主要文件夹解释
 
@@ -82,7 +82,11 @@ css使用[unoCss](https://unocss.nodejs.cn/)
 
 - [事件总线mitt](https://juejin.cn/post/6973106775755063333)
 
-- [tailwindcss](https://tailwindcss.com/) [unoCss](https://unocss.nodejs.cn/)
+- [scss](https://www.sass.hk/docs/)
+
+- [tailwindcss](https://tailwindcss.com/)
+
+- [unoCss](https://unocss.nodejs.cn/)
 
 - [Ant Design Vue](https://www.antdv.com/components/overview-cn)
 
