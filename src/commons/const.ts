@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-04-10 11:30:52
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-27 14:08:51
+ * @LastEditTime: 2024-03-04 15:03:10
  */
 export const SYSTEM_NAME = import.meta.env.VITE_GLOB_APP_TITLE || "vue-starter";
 export const VERSION = "%BUILDNUMBER%";
@@ -29,3 +29,5 @@ export const REGEX_NO_SPACE = "^[^\\s]*$"; // 禁止空格
 export const REGEX_MOBILE = /^1[3456789]\d{9}$/;
 export const REGEX_CHINESE = "[\u4E00-\u9FA5]"; // 中文
 export const REGEX_FILE_NAME = /^(?![\s.])[^\\/:*?"<>|]*$/; // 文件名
+
+export const DIALOG_Z_INDEX = 250;

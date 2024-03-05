@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 09:36:58
+ * @LastEditTime: 2024-03-04 16:13:58
 -->
 
 # 介绍
@@ -38,7 +38,7 @@ css使用[unoCss](https://unocss.nodejs.cn/)
 - `assets`主要是图片 svg icon 等资源文件
 - `commons\models` 是使用ts定义的会使用的模型
 - `commons\const.ts` 是使用ts定义的常量
-- `components`中是封装的一些与业务无关的组件 主要是对antdv的二次封装 使用`unplugin-vue-components`自动导入 可直接使用不用`import`
+- `components`中是封装的一些与业务无关的组件 主要是对antdv的二次封装 使用`unplugin-vue-components`自动导入 可直接使用不用`import` 使用时候注意组件名称统一格式为q-xxxx
 - `componentsBusiness` 中是封装的一些与业务有关的组件 使用`unplugin-vue-components`自动导入 可直接使用不用`import`
 - `enums` 中是使用`ts`定义的枚举 例如路由名称等
 - `hooks` 中是封装的一些简单的`hooks` 项目也引入了[vueuse](https://www.vueusejs.com/)

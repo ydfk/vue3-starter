@@ -3,15 +3,14 @@
  * @Author: ydfk
  * @Date: 2022-04-14 11:10:40
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-27 11:58:52
+ * @LastEditTime: 2024-03-04 15:58:05
  */
-import { apiGetCurrentUser } from "@/apis/user";
+import { apiGetCurrentUser, apiGetToken, apiRefreshToken } from "@/apis/user";
 import { TOKEN_REFRESH } from "@/commons/const";
 import { UserModel } from "@/commons/models/user";
 import dayjs from "dayjs";
 import { defineStore } from "pinia";
 import { store } from "@/stores";
-import { loginApi } from "@/apis/login";
 
 interface UserState {
   user: UserModel;
@@ -28,7 +27,7 @@ export const useUserStore = defineStore({
   }),
   actions: {
     async login(username: string, password: string) {
-      const token = await loginApi(username, password);
+      const token = await apiGetToken(username, password);
       if (token && token.token) {
         this.token = token.token;
         this.tokenExpire = dayjs(token.expireDate).format("YYYY-MM-DD HH:mm:ss");
@@ -49,10 +48,34 @@ export const useUserStore = defineStore({
     },
     checkToken() {
       return new Promise<string>((resolve, reject) => {
-        if (!this.token) {
+        if (!this.token || !this.token) {
+          console.error("token不存在");
           reject();
         } else {
-          resolve(this.token);
+          const expireDate = dayjs(this.tokenExpire);
+          const curTime = dayjs();
+
+          if (curTime.isAfter(expireDate)) {
+            console.error("token已经过期");
+            reject();
+          } else {
+            const refreshDate = dayjs(expireDate).subtract(TOKEN_REFRESH, "second");
+
+            if (refreshDate.isSameOrBefore(curTime)) {
+              console.log("刷新token");
+              apiRefreshToken()
+                .then((token) => {
+                  this.token = token.token;
+                  this.tokenExpire = dayjs(token.expireDate).format("YYYY-MM-DD HH:mm:ss");
+                  resolve(this.token);
+                })
+                .catch(() => {
+                  reject();
+                });
+            }
+
+            resolve(this.token);
+          }
         }
       });
     },

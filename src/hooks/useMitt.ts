@@ -3,15 +3,12 @@
  * @Author: ydfk
  * @Date: 2022-04-21 11:25:59
  * @LastEditors: ydfk
- * @LastEditTime: 2022-11-23 14:56:31
+ * @LastEditTime: 2024-03-04 16:06:24
  */
 
 import mitt from "mitt";
 import type { Handler } from "mitt";
-
-type MittType = {
-  TableRefresh?: string;
-};
+import { MittType } from "./mittType";
 
 const emitter = mitt<MittType>();
 

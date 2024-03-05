@@ -3,14 +3,14 @@
  * @Author: ydfk
  * @Date: 2021-08-27 12:01:39
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-27 14:07:55
+ * @LastEditTime: 2024-03-04 15:58:47
  */
 import { MockMethod } from "vite-plugin-mock";
 import { resultSuccess, resultError } from "./_util";
 
 export default [
   {
-    url: "/api/login",
+    url: "/api/token",
     timeout: 100,
     method: "post",
     response: ({ body }) => {

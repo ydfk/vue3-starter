@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-04-14 11:23:13
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-27 09:20:30
+ * @LastEditTime: 2024-03-04 15:26:28
  */
 
 export interface BaseModel {
@@ -26,4 +26,21 @@ export interface PageQueryModel {
   pageSize: number;
   pageIndex: number;
   searchText: string;
+}
+
+export interface PageQuery<T> extends PageQueryModel {
+  sortField: string;
+  sortOrder: string;
+  param: T;
+  keyword: string;
+}
+
+export interface ProjectQueryType {
+  queryType: number;
+}
+
+export interface PageResult<T> {
+  result: T[];
+  total: number;
+  totalPages: number;
 }

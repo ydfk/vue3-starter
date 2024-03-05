@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-26 23:04:48
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-27 13:40:07
+ * @LastEditTime: 2024-03-04 15:57:20
  */
 
 import { TokenModel } from "@/commons/models/user";
@@ -11,3 +11,5 @@ import { doHttp } from "@/utils/http/axios";
 
 export const loginApi = (userName: string, password: string) =>
   doHttp.post<TokenModel>({ url: "login", data: { userName: userName, password: password } });
+
+export const apiRefreshToken = () => doHttp.get<TokenModel>({ url: "token/refresh" });

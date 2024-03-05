@@ -7,6 +7,18 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Index: typeof import('./src/components/svgIcon/Index.vue')['default']
+    QCascader: typeof import('./src/components/select/QCascader.vue')['default']
+    QDatePicker: typeof import('./src/components/datePicker/QDatePicker.vue')['default']
+    QDialog: typeof import('./src/components/dialog/QDialog.vue')['default']
+    QInputNumber: typeof import('./src/components/inputNumber/QInputNumber.vue')['default']
+    QRangePicker: typeof import('./src/components/datePicker/QRangePicker.vue')['default']
+    QSelect: typeof import('./src/components/select/QSelect.vue')['default']
+    QSelectTree: typeof import('./src/components/select/QSelectTree.vue')['default']
+    QTable: typeof import('./src/components/table/QTable.vue')['default']
+    QTableAction: typeof import('./src/components/table/QTableAction.vue')['default']
+    QTableActionItem: typeof import('./src/components/table/QTableActionItem.vue')['default']
+    QTableSearch: typeof import('./src/components/table/QTableSearch.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
