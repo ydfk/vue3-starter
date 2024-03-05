@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2023-05-15 20:14:15
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-22 11:09:50
+ * @LastEditTime: 2024-03-05 11:32:51
  */
 // .commitlintrc.js
 /** @type {import('cz-git').UserConfig} */
@@ -26,6 +26,7 @@ module.exports = {
       confirmCommit: "是否提交或修改commit ?",
     },
     types: [
+      { value: "wip", name: "wip:      🚧 开发中 | work in progress", emoji: ":construction:" },
       { value: "feat", name: "feat:     ✨ 新增功能 | A new feature", emoji: ":sparkles:" },
       { value: "fix", name: "fix:      🐛 修复缺陷 | A bug fix", emoji: ":bug:" },
       { value: "docs", name: "docs:     📝 文档更新 | Documentation only changes", emoji: ":memo:" },

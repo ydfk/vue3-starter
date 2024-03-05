@@ -25,6 +25,7 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "declaration": false,
+    "incremental": true,
     "types": ["vite/client", "vite-plugin-svg-icons2/client"],
     "paths": {
       "@/*": ["src/*"],
