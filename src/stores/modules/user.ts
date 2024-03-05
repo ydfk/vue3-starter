@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-04-14 11:10:40
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:58:05
+ * @LastEditTime: 2024-03-05 15:33:45
  */
 import { apiGetCurrentUser, apiGetToken, apiRefreshToken } from "@/apis/user";
 import { TOKEN_REFRESH } from "@/commons/const";
@@ -31,6 +31,7 @@ export const useUserStore = defineStore({
       if (token && token.token) {
         this.token = token.token;
         this.tokenExpire = dayjs(token.expireDate).format("YYYY-MM-DD HH:mm:ss");
+
         await this.setUser();
         return true;
       } else {
@@ -48,13 +49,12 @@ export const useUserStore = defineStore({
     },
     checkToken() {
       return new Promise<string>((resolve, reject) => {
-        if (!this.token || !this.token) {
+        if (!this.token) {
           console.error("token不存在");
           reject();
         } else {
           const expireDate = dayjs(this.tokenExpire);
           const curTime = dayjs();
-
           if (curTime.isAfter(expireDate)) {
             console.error("token已经过期");
             reject();
