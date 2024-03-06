@@ -1,26 +1,3 @@
-.flex-center {
-  @apply flex items-center justify-center;
-}
-
-.flex-right {
-  @apply flex items-center justify-end;
-}
-
-.flex-left {
-  @apply flex items-center justify-start;
-}
-
-.flex-left-center {
-  @apply flex items-center justify-start;
-}
-
-.g-title {
-  color: #333;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 20px;
-}
-
 .g-divider {
   width: 100%;
   height: 1px;
@@ -34,60 +11,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 1;
-}
-
-.no-top-border {
-  border-top: none !important;
-}
-
-.no-bottom-border {
-  border-bottom: none !important;
-}
-
-.no-left-border {
-  border-left: none !important;
-}
-
-.no-right-border {
-  border-right: none !important;
-}
-
-.busy-1 {
-  background-color: #b8e8a1;
-}
-
-.busy-2 {
-  background-color: #ffea78;
-}
-
-.busy-3 {
-  background-color: #ffc48d;
-}
-
-.busy-4 {
-  background-color: #f4996b;
-}
-
-.busy-5 {
-  background-color: #f0783c;
-}
-
-.v-chart {
-  width: 100%;
-  height: 100%;
-}
-
-.ellipsis {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 1;
   word-wrap: break-word;
   word-break: break-all;
 }
 
-.multipleEllipsis {
+.g-multiple-ellipsis {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -95,42 +23,18 @@
   -webkit-line-clamp: 2;
 }
 
-.introjs-tooltip-header {
-  display: none;
+.g-no-top-border {
+  border-top: none !important;
 }
 
-.introjs-tooltipbuttons {
-  border: 0 !important;
+.g-no-bottom-border {
+  border-bottom: none !important;
 }
 
-.introjs-button {
-  border: 0 !important;
-  border-radius: 0.3rem !important;
-  background-color: #4d92fd !important;
-  color: white !important;
-  text-shadow: none !important;
+.g-no-left-border {
+  border-left: none !important;
 }
 
-.introjs-button:focus {
-  border-radius: 0.3rem !important;
-  background-color: #4d92fd !important;
-  box-shadow: none !important;
-  color: white !important;
-  text-shadow: none !important;
-}
-
-.introjs-tooltiptext {
-  padding: 20px 20px 10px !important;
-
-  .title {
-    color: #333;
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  .content {
-    color: #999;
-    font-size: 14px;
-    font-weight: 400;
-  }
+.g-no-right-border {
+  border-right: none !important;
 }
