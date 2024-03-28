@@ -3,11 +3,11 @@
  * @Author: ydfk
  * @Date: 2024-03-04 15:02:18
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:02:32
+ * @LastEditTime: 2024-03-28 10:14:38
 -->
 <template>
   <a-modal
-    :visible="visible"
+    :open="open"
     :bodyStyle="bodyStyle"
     :keyboard="false"
     :maskClosable="false"
@@ -39,8 +39,8 @@
 <script setup lang="ts">
   import { DIALOG_Z_INDEX } from "@/commons/const";
 
-  interface Props {
-    visible: boolean;
+  export interface Props {
+    open: boolean;
     title: string;
     width?: number;
     okText?: string;
@@ -53,34 +53,32 @@
     zIndex?: number;
   }
 
-  interface Emits {
-    (e: "ok"): void;
-    (e: "cancel"): void;
-  }
+  const props = withDefaults(defineProps<Props>(), {
+    open: true,
+    title: "",
+    width: 800,
+    okText: "确定",
+    cancelText: "取消",
+    showCancelBtn: true,
+    showOkBtn: true,
+    bodyPadding: "",
+    okLoading: false,
+    showFooter: true,
+    zIndex: DIALOG_Z_INDEX,
+  });
 
-  let {
-    visible = true,
-    title,
-    width = 800,
-    okText = "确定",
-    cancelText = "取消",
-    showCancelBtn = true,
-    showOkBtn = true,
-    bodyPadding = "",
-    okLoading = false,
-    showFooter = true,
-    zIndex = DIALOG_Z_INDEX,
-  } = defineProps<Props>();
+  const emit = defineEmits<{
+    ok: [];
+    cancel: [];
+  }>();
 
-  const emit = defineEmits<Emits>();
+  const modalWidth = computed(() => `${props.width}px`);
 
-  let modalWidth = computed(() => `${width}px`);
+  const maxHeight = computed(() => document.body.clientHeight - 200);
 
-  let maxHeight = computed(() => document.body.clientHeight - 200);
-
-  let bodyStyle = computed(() => {
-    if (bodyPadding) {
-      return { "max-height": `${maxHeight}px`, overflow: "auto", padding: bodyPadding };
+  const bodyStyle = computed(() => {
+    if (props.bodyPadding) {
+      return { "max-height": `${maxHeight}px`, overflow: "auto", padding: props.bodyPadding };
     } else {
       return { "max-height": `${maxHeight}px`, overflow: "auto" };
     }

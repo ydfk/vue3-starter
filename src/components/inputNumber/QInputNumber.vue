@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2024-03-04 15:04:42
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:04:52
+ * @LastEditTime: 2024-03-28 11:23:51
 -->
 <template>
   <a-input-number
@@ -43,29 +43,28 @@
     isPercentage?: boolean;
     precision?: number;
   }
-  const {
-    value,
-    placeholder = "请输入",
-    disabled = false,
-    controls = true,
-    precision = 2,
-    max = INPUT_NUMBER_MAX,
-    min = INPUT_NUMBER_MIN,
-    step = INPUT_NUMBER_STEP,
-    isPercentage = false,
-  } = defineProps<Props>();
 
-  interface Emits {
+  const props = withDefaults(defineProps<Props>(), {
+    placeholder: "请输入",
+    disabled: false,
+    controls: true,
+    precision: 2,
+    max: INPUT_NUMBER_MAX,
+    min: INPUT_NUMBER_MIN,
+    step: INPUT_NUMBER_STEP,
+    isPercentage: false,
+  });
+
+  const emit = defineEmits<{
     (e: "update:value", arg: number | null): void;
     (e: "change", arg: number | null): void;
-  }
-  const emit = defineEmits<Emits>();
+  }>();
 
   let inputValue = ref<number | null>();
 
   const formatter = (value: number, info: { userTyping: boolean; input: string }) => {
     const v = `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    if (isPercentage && v) {
+    if (props.isPercentage && v) {
       return `${v}%`;
     } else {
       return v;
@@ -74,7 +73,7 @@
 
   const parser = (value: string) => {
     const v = value.replace(/$s?|(,*)/g, "");
-    if (isPercentage) {
+    if (props.isPercentage) {
       return v.replace("%", "");
     } else {
       return v;
@@ -88,7 +87,7 @@
   };
 
   watch(
-    () => value,
+    () => props.value,
     (newVal, oldVal) => {
       if (newVal != oldVal) {
         inputValue.value = newVal;

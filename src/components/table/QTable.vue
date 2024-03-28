@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-10-24 15:11:08
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:31:12
+ * @LastEditTime: 2024-03-28 11:47:03
 -->
 <template>
   <div>
@@ -66,10 +66,11 @@
   import type { TableProps } from "ant-design-vue";
   import type { TablePaginationConfig } from "ant-design-vue/es/table/Table";
   import useMitt from "@/hooks/useMitt";
+  import { cloneDeep } from "lodash-es";
 
   interface Props {
+    dataSource: any[];
     columns: TableColumn[];
-    dataSource?: any[];
     apiParams?: PageQuery<any>;
     queryApi?: ((data: PageQuery<any>) => Promise<PageResult<any>>) | string;
     showSearch?: boolean;
@@ -80,31 +81,48 @@
     customRow?: (record: any) => {};
   }
 
-  interface Emits {
+  // let {
+  //   columns,
+  //   queryApi,
+  //   getActions,
+  //   showSearch = true,
+  //   dataSource = [],
+  //   showPage = true,
+  //   showRecord = true,
+  //   showSelect = false,
+  //   apiParams = {
+  //     sortField: "",
+  //     sortOrder: "",
+  //     param: {},
+  //     keyword: "",
+  //   },
+  //   customRow = () => {},
+  // } = defineProps<Props>();
+
+  const props = withDefaults(defineProps<Props>(), {
+    dataSource: () => [],
+    showSearch: true,
+    showPage: true,
+    showRecord: true,
+    showSelect: false,
+    apiParams: () => {
+      return {
+        sortField: "",
+        sortOrder: "",
+        param: {},
+        keyword: "",
+      } as PageQuery<any>;
+    },
+    customRow: () => {
+      return {};
+    },
+  });
+
+  const emit = defineEmits<{
     (e: "search", arg: string): void;
     (e: "reset", arg: string): void;
     (e: "action", arg1: TableActionKeyEnum, arg2: any): void;
-  }
-
-  let {
-    columns,
-    queryApi,
-    getActions,
-    showSearch = true,
-    dataSource = [],
-    showPage = true,
-    showRecord = true,
-    showSelect = false,
-    apiParams = {
-      sortField: "",
-      sortOrder: "",
-      param: {},
-      keyword: "",
-    },
-    customRow = () => {},
-  } = defineProps<Props>();
-
-  const emit = defineEmits<Emits>();
+  }>();
 
   const { registerEmitter } = useMitt();
 
@@ -123,7 +141,7 @@
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
       if (selected) {
-        selections.value = dataSource.map((item) => item.id);
+        selections.value = props.dataSource.map((item) => item.id);
       } else {
         selections.value = [];
       }
@@ -152,23 +170,26 @@
 
   const fetchData = async () => {
     loading.value = true;
-    if (dataSource && dataSource.length > 0) {
+    if (props.dataSource && props.dataSource.length > 0) {
+      let localDataSource = cloneDeep(props.dataSource);
       if (searchText) {
         const pattern = new RegExp(".*" + searchText + ".*");
-        dataSource = dataSource.filter((row) => {
+        localDataSource = localDataSource.filter((row) => {
           return Object.keys(row).some((key) => {
             return pattern.test(String(row[key]));
           });
         });
       }
-      total.value = dataSource.length;
-      tableDataSource.value = showPage ? dataSource.slice((pageIndex.value - 1) * pageSize.value, pageSize.value * pageIndex.value) : dataSource;
+      total.value = localDataSource.length;
+      tableDataSource.value = props.showPage
+        ? localDataSource.slice((pageIndex.value - 1) * pageSize.value, pageSize.value * pageIndex.value)
+        : localDataSource;
       loading.value = false;
     } else {
       let pageResult: PageResult<any>;
-      if (typeof queryApi === "string") {
+      if (typeof props.queryApi === "string") {
         pageResult = await doHttp.post<PageResult<any>>({
-          url: queryApi as string,
+          url: props.queryApi as string,
           data: {
             searchText: searchText || "",
             pageSize: pageSize,
@@ -176,9 +197,9 @@
           },
         });
       } else {
-        if (queryApi) {
-          pageResult = await queryApi({
-            ...apiParams,
+        if (props.queryApi) {
+          pageResult = await props.queryApi({
+            ...props.apiParams,
             pageIndex: pageIndex.value,
             pageSize: pageSize.value,
             searchText: searchText.value,
@@ -200,9 +221,9 @@
       }
     }
 
-    if (tableDataSource && tableDataSource.value.length > 0 && getActions) {
+    if (tableDataSource && tableDataSource.value.length > 0 && props.getActions) {
       for (const data of tableDataSource.value) {
-        data["action"] = getActions(data);
+        data["action"] = props.getActions(data);
       }
     }
   };
@@ -224,11 +245,11 @@
   };
 
   const setTableColumns = () => {
-    if (columns && columns.length > 0) {
-      if (!showRecord) {
-        tableColumns.value = columns;
+    if (props.columns && props.columns.length > 0) {
+      if (!props.showRecord) {
+        tableColumns.value = props.columns;
       } else {
-        tableColumns.value = [{ title: "序号", dataIndex: "index", width: 50 }, ...columns];
+        tableColumns.value = [{ title: "序号", dataIndex: "index", width: 50 }, ...props.columns];
       }
 
       if (tableDataSource && tableDataSource.value.some((x) => x["action"]) && !tableColumns.value.some((x) => x.dataIndex == "action")) {
@@ -246,7 +267,7 @@
   registerEmitter("TableRefresh", onSearch);
 
   watch(
-    () => dataSource,
+    () => props.dataSource,
     async () => {
       pageIndex.value = 1;
       fetchData();

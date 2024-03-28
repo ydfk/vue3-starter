@@ -44,3 +44,4 @@ fabric.properties
 .idea/*
 .tsbuildinfo
 tsconfig.tsbuildinfo
+.history

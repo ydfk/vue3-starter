@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2024-03-04 14:55:11
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 14:59:54
+ * @LastEditTime: 2024-03-28 10:56:53
 -->
 <template>
   <a-date-picker
@@ -41,28 +41,25 @@
     disabledDate?: (current: Dayjs) => Boolean;
   }
 
-  const {
-    value,
-    placeholder = "请选择时间",
-    showTime = false,
-    allowClear = false,
-    disabled = false,
-    format,
-    picker = "date",
-    showToday = false,
-  } = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    disabled: false,
+    allowClear: false,
+    showTime: false,
+    placeholder: "请选择时间",
+    picker: "date",
+    showToday: false,
+  });
 
-  interface Emits {
+  const emit = defineEmits<{
     (e: "update:value", arg: string | null): void;
     (e: "change", arg: string | null): void;
-  }
-  const emit = defineEmits<Emits>();
+  }>();
 
   let dateValue = ref<Dayjs>();
   let dateFormat = computed<string>(() => {
-    if (format) {
-      return format;
-    } else if (showTime) {
+    if (props.format) {
+      return props.format;
+    } else if (props.showTime) {
       return DATE_FORMAT_HAS_TIME;
     } else {
       return DATE_FORMAT;
@@ -73,7 +70,7 @@
     let formatValue;
     if (value != null) {
       formatValue = value.format(DATE_FORMAT_TRANSMISSION);
-      if (!showTime) {
+      if (!props.showTime) {
         formatValue = value.hour(0).minute(0).second(0).millisecond(0).format(DATE_FORMAT_TRANSMISSION);
       }
     } else {
@@ -86,7 +83,7 @@
   };
 
   watch(
-    () => value,
+    () => props.value,
     (newVal, oldVal) => {
       if (!newVal) {
         dateValue.value = undefined;

@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-10-27 16:31:55
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:24:08
+ * @LastEditTime: 2024-03-28 11:31:36
 -->
 <template>
   <div v-if="actions.length == 1">
@@ -41,16 +41,15 @@
     rowData: any;
   }
 
-  interface Emits {
+  //let { actions, rowData } = defineProps<Props>();
+  const props = defineProps<Props>();
+  const emit = defineEmits<{
     (e: "action", arg: TableActionKeyEnum): void;
-  }
-
-  let { actions, rowData } = defineProps<Props>();
-  const emit = defineEmits<Emits>();
+  }>();
 
   let menuActions = computed(() => {
-    if (actions && actions.length > 2) {
-      return actions.slice(1, actions.length);
+    if (props.actions && props.actions.length > 2) {
+      return props.actions.slice(1, props.actions.length);
     } else {
       return [];
     }

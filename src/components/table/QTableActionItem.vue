@@ -28,12 +28,11 @@
     rowData: any;
   }
 
-  interface Emits {
+  // const { action, rowData } = defineProps<Props>();
+  const props = defineProps<Props>();
+  const emit = defineEmits<{
     (e: "action", arg: TableActionKeyEnum): void;
-  }
-
-  const { action, rowData } = defineProps<Props>();
-  const emit = defineEmits<Emits>();
+  }>();
 
   const onAction = (key: TableActionKeyEnum) => emit("action", key);
 </script>

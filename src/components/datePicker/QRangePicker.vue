@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2024-03-04 15:00:29
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:00:40
+ * @LastEditTime: 2024-03-28 11:22:30
 -->
 <template>
   <a-range-picker
@@ -23,6 +23,7 @@
   import dayjs, { Dayjs } from "dayjs";
   import { Form } from "ant-design-vue";
   import { DisabledTime } from "./model";
+  import { PropType } from "vue";
 
   const formItemContext = Form.useInjectFormItemContext();
 
@@ -33,32 +34,29 @@
     disabled?: boolean;
     allowClear?: boolean;
     showTime?: boolean;
-    placeholder?: [string, string];
+    placeholder: [string, string] | undefined;
     format?: string;
     disabledTime?: (date: Dayjs, type: "start" | "end") => DisabledTime;
     disabledDate?: (current: Dayjs) => Boolean;
   }
 
-  const {
-    value,
-    placeholder = ["请选择开始时间", "请选择结束时间"],
-    showTime = false,
-    allowClear = false,
-    disabled = false,
-    format,
-  } = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    disabled: false,
+    allowClear: false,
+    showTime: false,
+    placeholder: () => ["请选择开始时间", "请选择结束时间"],
+  });
 
-  interface Emits {
+  const emit = defineEmits<{
     (e: "update:value", arg: [string, string] | null): void;
     (e: "change", arg: [string, string] | null): void;
-  }
-  const emit = defineEmits<Emits>();
+  }>();
 
   let rangeValue = ref<RangeValue>();
   let rangeFormat = computed<string>(() => {
-    if (format) {
-      return format;
-    } else if (showTime) {
+    if (props.format) {
+      return props.format;
+    } else if (props.showTime) {
       return DATE_FORMAT_HAS_TIME;
     } else {
       return DATE_FORMAT;
@@ -83,7 +81,7 @@
   };
 
   watch(
-    () => value,
+    () => props.value,
     (newVal, oldVal) => {
       if (newVal && newVal.length > 1 && newVal[0] && newVal[1] && newVal != oldVal) {
         rangeValue.value = [dayjs(newVal[0]), dayjs(newVal[1])];

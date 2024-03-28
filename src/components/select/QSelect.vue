@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2023-01-01 13:27:38
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:17:50
+ * @LastEditTime: 2024-03-28 11:26:37
 -->
 <template>
   <a-select
@@ -35,15 +35,14 @@
     showSearch?: boolean;
   }
 
-  const {
-    value,
-    options = [],
-    placeholder = "请选择",
-    disabled = false,
-    allowClear = true,
-    mode = undefined,
-    showSearch = true,
-  } = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    disabled: false,
+    allowClear: true,
+    showSearch: true,
+    placeholder: "请选择",
+    mode: undefined,
+    options: () => [],
+  });
 
   let selectValue = ref<string | string[]>();
 
@@ -54,7 +53,7 @@
   const emit = defineEmits<Emits>();
 
   const filterOption = (inputValue, option) => {
-    const selectOption = options.find((x) => x.value == option.value);
+    const selectOption = props.options.find((x) => x.value == option.value);
 
     return (
       selectOption &&
@@ -71,7 +70,7 @@
   };
 
   watch(
-    () => value,
+    () => props.value,
     (newVal, oldVal) => {
       if (newVal == null && newVal == undefined) {
         selectValue.value = undefined;

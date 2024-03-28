@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2023-01-01 14:55:28
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:16:30
+ * @LastEditTime: 2024-03-28 11:25:01
 -->
 <template>
   <a-cascader
@@ -34,25 +34,32 @@
     showSearch?: boolean;
   }
 
-  const {
-    value,
-    options = [],
-    placeholder = "请选择",
-    disabled = false,
-    allowClear = false,
-    multiple = false,
-    showSearch = true,
-  } = defineProps<Props>();
+  // const {
+  //   value,
+  //   options = [],
+  //   placeholder = "请选择",
+  //   disabled = false,
+  //   allowClear = false,
+  //   multiple = false,
+  //   showSearch = true,
+  // } = defineProps<Props>();
 
-  interface Emits {
+  const props = withDefaults(defineProps<Props>(), {
+    disabled: false,
+    allowClear: false,
+    multiple: false,
+    showSearch: true,
+    placeholder: "请选择",
+  });
+
+  const emit = defineEmits<{
     (e: "update:value", arg: string | string[]): void;
     (e: "change", arg: string | string[]): void;
-  }
-  const emit = defineEmits<Emits>();
+  }>();
 
   let selectValue = ref<string[] | string[][]>();
   let search = computed(() => {
-    if (showSearch) {
+    if (props.showSearch) {
       return getCascaderSearch();
     } else {
       return false;
@@ -60,7 +67,7 @@
   });
 
   const onChange = (value: string[] | string[][]) => {
-    if (multiple) {
+    if (props.multiple) {
       let realSelectValue: string[] = [];
 
       for (const v of value as string[][]) {
@@ -78,16 +85,16 @@
   };
 
   watch(
-    () => value,
+    () => props.value,
     (newVal, oldVal) => {
       if (newVal != null && newVal != undefined && newVal != oldVal) {
-        if (multiple) {
+        if (props.multiple) {
           selectValue.value = [[]];
           for (const v of newVal as string[]) {
-            selectValue.value.push(getCascaderPath(v, options));
+            selectValue.value.push(getCascaderPath(v, props.options));
           }
         } else {
-          selectValue.value = getCascaderPath(newVal as string, options);
+          selectValue.value = getCascaderPath(newVal as string, props.options);
         }
       }
     },

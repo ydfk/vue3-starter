@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2021-08-24 17:24:45
  * @LastEditors: ydfk
- * @LastEditTime: 2024-02-27 11:44:11
+ * @LastEditTime: 2024-03-14 16:19:05
  */
 import { ConfigEnv, PluginOption, defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -100,7 +100,7 @@ export default ({ mode, command }: ConfigEnv) => {
       port: Number(env.VITE_PORT), // 设置服务启动端口号
       open: true, // 设置服务启动时是否自动打开浏览器
       cors: true, // 允许跨域
-
+      host: true,
       // 设置代理，根据我们项目实际情况配置
       proxy: {
         "/api": {

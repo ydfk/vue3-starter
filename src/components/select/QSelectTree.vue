@@ -2,7 +2,7 @@
  * @Author: error: git config user.name && git config user.email & please set dead value or install git
  * @Date: 2022-12-29 15:03:45
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:20:40
+ * @LastEditTime: 2024-03-28 11:27:46
  * @FilePath: \work-space-web\src\components\select\QSelectTree.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -30,14 +30,20 @@
     fieldNames?: FieldNames;
     treeDefaultExpandAll?: boolean;
   }
-  let { treeData = [], isMultiple = false, placeholder = "不限", fieldNames, treeDefaultExpandAll = false } = defineProps<Props>();
+  // let { treeData = [], isMultiple = false, placeholder = "不限", fieldNames, treeDefaultExpandAll = false } = defineProps<Props>();
+
+  const props = withDefaults(defineProps<Props>(), {
+    treeData: () => [],
+    isMultiple: false,
+    placeholder: "不限",
+    treeDefaultExpandAll: false,
+  });
 
   const value = defineModel<string>("");
-  interface Emits {
+  const emit = defineEmits<{
     (e: "select-tree-click", arg: any): void;
     (e: "change", arg: any): void;
-  }
-  const emit = defineEmits<Emits>();
+  }>();
   let selectValue = ref<string | null | string[]>();
 
   const onSelect = () => {

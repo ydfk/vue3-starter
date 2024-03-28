@@ -3,7 +3,7 @@
  * @Author: ydfk
  * @Date: 2022-10-24 15:13:33
  * @LastEditors: ydfk
- * @LastEditTime: 2024-03-04 15:23:46
+ * @LastEditTime: 2024-03-28 11:30:07
 -->
 <template>
   <div class="table-header">
@@ -34,16 +34,19 @@
   </div>
 </template>
 <script setup lang="ts">
-  interface Props {
-    searchText: string;
-  }
-  interface Emits {
+  const props = withDefaults(
+    defineProps<{
+      searchText: string;
+    }>(),
+    {
+      searchText: "",
+    }
+  );
+  const emit = defineEmits<{
     (e: "reset", arg: string | undefined): void;
     (e: "search", arg: string | undefined): void;
     (e: "update:searchText", arg: string | undefined): void;
-  }
-  let { searchText } = defineProps<Props>();
-  const emit = defineEmits<Emits>();
+  }>();
 
   let text = ref<string | undefined>(undefined);
 
@@ -61,7 +64,7 @@
   const onSearchTextChange = () => emit("update:searchText", text.value);
 
   watch(
-    () => searchText,
+    () => props.searchText,
     (val) => (text.value = val)
   );
 
