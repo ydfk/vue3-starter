@@ -45,3 +45,5 @@ fabric.properties
 .tsbuildinfo
 tsconfig.tsbuildinfo
 .history
+auto-imports.d.ts
+components.d.ts
